@@ -25,7 +25,7 @@ import java.nio.file.Paths;
 import static java.nio.file.StandardOpenOption.*;
 
 /**
- * 
+ * Programa principal del proyecto
  * @author cesar
  *
  */
@@ -309,11 +309,23 @@ public class main {
 	
 	public static String crearCodigoClienteEspecial(BD_Cliente bd){
 		
-		String codigo;
+		String codigo="";
 		int numeroCodigo = bd.contadorClientes();
 		numeroCodigo++;
 		
-		codigo="CE"+numeroCodigo;// El codigo para un cliente especial se genera con las siglas CN mas un aleatorio de 1000 hasta 9999
+		// El codigo para un cliente especial se genera con las siglas CN mas los ceros que necesite segun los usuarios que ya haya
+		
+		if(numeroCodigo<10)
+			codigo="CE"+000+numeroCodigo;
+		
+		if(numeroCodigo>=10 && numeroCodigo<=99)
+			codigo = "CE"+00+numeroCodigo;
+		
+		if(numeroCodigo>99)
+			codigo = "CE"+0+numeroCodigo;
+		
+		if(numeroCodigo>999)
+			codigo = "CE"+numeroCodigo;
 		
 		return codigo;
 	}
@@ -326,11 +338,23 @@ public class main {
 	
 	public static String crearCodigoClienteNormal(BD_Cliente bd){
 		
-		String codigo;
+		String codigo="";
 		int numeroCodigo = bd.contadorClientes();
 		numeroCodigo++;
+
+		// El codigo para un cliente especial se genera con las siglas CN mas los ceros que necesite segun los usuarios que ya haya
 		
-		codigo="CN"+numeroCodigo; // El codigo para un cliente normal se genera con las siglas CN mas un aleatorio de 1000 hasta 9999
+		if(numeroCodigo<10)
+			codigo="CE"+000+numeroCodigo;
+		
+		if(numeroCodigo>=10 && numeroCodigo<=99)
+			codigo = "CE"+00+numeroCodigo;
+		
+		if(numeroCodigo>99)
+			codigo = "CE"+0+numeroCodigo;
+		
+		if(numeroCodigo>999)
+			codigo = "CE"+numeroCodigo;
 		
 		return codigo;
 		
