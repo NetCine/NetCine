@@ -1,0 +1,4 @@
+Mail			Clave		Fecha
+
+
+Cliente@especial.com	a1234567	2017-05-12
