@@ -4,7 +4,6 @@ package proyectoCine;
  * 
  */
 
-import java.io.*;
 
 import java.util.*;
 
@@ -55,8 +54,7 @@ public class main {
 			
 			}catch(InputMismatchException e){			
 				opcion1=3; // Le asigno un valor mayor que el 2 y así imprimo el error abajo, mensaje común para todos los fallos
-				sc.nextLine(); // Limpieza de buffer				
-				
+				sc.nextLine(); // Limpieza de buffer		
 			}
 			
 			if(opcion1!=1 && opcion1!=2)
@@ -102,16 +100,15 @@ public class main {
 						int correcto=0;
 						sc.nextLine();
 						do{
-							System.out.println("\nPara poder conectarte como usuario especal necesitas un codigo promocional, Introduce un codigo promocional valido para poder registrarte como usuario especial:\n ");
+							System.out.println("\nPara poder darte de alta como usuario especal necesitas un codigo promocional.\nIntroduce un codigo promocional valido para poder registrarte como usuario especial:\n ");
 							String leerCodigo=sc.nextLine();
 							
 							for(int i=0;i<contadorCodigos;i++){ // Buscamos si el codigo es correcto
 								if(codigosPromocionales[i].equals(leerCodigo.toUpperCase())){
-									correcto++;									
-									
-								}
-									
+									correcto++;								
+								}									
 							}
+							
 							if(correcto==0)
 								System.out.print("\n--- ERROR, codigo no valido, inserta un codigo promocional valido para registrarte como usuario especial ");
 							
@@ -141,9 +138,21 @@ public class main {
 					fechaNacimiento=(LocalDate.of(anyo,mes,dia)); // Se genera la fecha
 					System.out.print("Introduce numero de tarjeta de credito: ");
 					tarjeta=sc.nextInt();
-					sc.nextLine(); // Limpiamos el buffer
-					System.out.print("Introduce correo: ");
-					correo=sc.nextLine();
+					sc.nextLine(); // Limpiamos el buffer					
+					
+					int correoValido;
+					/* Al añadir el mail, verificamos que sea correcto comprobando que tenga una @*/
+					do{	
+						System.out.print("Introduce correo: ");
+						correo=sc.nextLine();
+						
+						correoValido=1;
+						if(correo.indexOf("@")==-1){							
+							System.out.println("\n--- Correo no válido, inserte de nuevo.");
+							correoValido=0;
+						}
+					}while(correoValido==0);	
+					
 					System.out.print("Introduce contraseña: ");
 					clave=sc.nextLine();
 				
@@ -166,16 +175,15 @@ public class main {
 				if ( bd.añadirCliente(cl)) // Insertamos en la bbdd
 					System.out.println("Añadido en la tabla clientes");		
 				else
-					System.out.println("No se ha podido añadir");
+					System.out.println("--- No se ha podido añadir en la tabla clientes");
 				
-				/*Vamos a añadirlo en la tabla usuarios*/
-				
+				/*Vamos a añadirlo en la tabla usuarios*/				
 				Usuario usu = (new Usuario(codigoClienteNormal,correo,clave)); // Generamos el usuario para insertarle
 				
 				if(bd2.añadirUsuario(usu))
 					System.out.println("Añadido en la tabla usuarios");
 				else
-					System.out.println("Nos se ha podido añadir a la tabla usuarios");
+					System.out.println("--- No se ha podido añadir a la tabla usuarios");
 			}
 			
 			/*Vamos a añadir el cliente especial a la tabla cliente*/
@@ -186,9 +194,9 @@ public class main {
 				// Le creamos con el descuento de cliente especial (30%)
 				Cliente cl= (new Cliente(codigoClienteEspecial,nombre,apellidos,dni,telefono,correo,clave,tarjeta,30,fechaNacimiento));// Creamos el objeto que vamos a insertar en la bbdd para dar el alta
 				if ( bd.añadirCliente(cl)) // Insertamos en la bbdd
-					System.out.println("Añadido");		
+					System.out.println("Añadido en la tabla clientes");		
 				else
-					System.out.println("No se ha podido añadir");
+					System.out.println("--- No se ha podido añadir en la tabla clientes");
 				
 				/*Vamos a añadirlo en la tabla usuarios*/
 				
@@ -197,7 +205,7 @@ public class main {
 				if(bd2.añadirUsuario(usu))
 					System.out.println("Añadido en la tabla usuarios");
 				else
-					System.out.println("Nos se ha podido añadir a la tabla usuarios");
+					System.out.println("--- No se ha podido añadir a la tabla usuarios");
 				
 				
 			}
@@ -268,6 +276,7 @@ public class main {
 				}
 			}
 	
+		sc.close();
 	}
 	
 	
@@ -293,6 +302,7 @@ public class main {
             writer.newLine();
             
             writer.close();
+            sc.close();
             
         } catch (IOException x) {
             System.err.format("IOException: %s%n", x);
