@@ -94,7 +94,7 @@ public class BD_Usuario extends BD_Conector {
 				t= reg.getString(1); // Cogemos el codigo del usuario para devolverle							
 			s.close();
 			this.cerrar();
-			return t;
+			return t; // En caso de no encontrarlo, devolvera un String vacio
 		}
 		catch ( SQLException e){
 	

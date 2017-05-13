@@ -36,7 +36,7 @@ public class main {
 		BD_Cliente bd = new BD_Cliente("mysql-properties.xml");	
 		BD_Usuario bd2 = new BD_Usuario("mysql-properties.xml");
 		
-		int opcion1=0;
+		int opcion1=0, opcionUsuario;
 		
 		System.out.println("|----------------------------------|");
 		System.out.println("|------ BIENVENIDO A NETCINE ------|");
@@ -55,7 +55,7 @@ public class main {
 					opcion1=sc.nextInt();
 				
 				}catch(InputMismatchException e){			
-					opcion1=3; // Le asigno un valor mayor que el 2 y así imprimo el error abajo, mensaje común para todos los fallos
+					opcion1=4; // Le asigno un valor mayor que el 2 y así imprimo el error abajo, mensaje común para todos los fallos
 					sc.nextLine(); // Limpieza de buffer		
 				}
 				
@@ -245,7 +245,7 @@ public class main {
 					System.out.println("Por motivos técnicos no podemos obtener la información en este momento");
 				else
 					if (resultadoBusqueda.equals(""))
-						System.out.println("LO SENTIMOS PERO ESE USUARIO NO ESTA REGISTRADO");
+						System.out.println("LO SENTIMOS PERO ESE USUARIO NO FIGURA COMO REGISTRADO O HA INTRODUCIDO MAL LA CLAVE DE ACCESO");
 				
 					else{
 						
@@ -255,21 +255,49 @@ public class main {
 						
 						String codigo = resultadoBusqueda.substring(0, resultadoBusqueda.length()-4); // Eliminamos los 4 ultimos caracteres para quedarnos con las dos letras y con ellas saber el tipo de usuario.
 						
+												
 						/*Segun el usuario conectado sacamos un menu u otro*/
 						if(codigo.indexOf("CN")!=-1){
 							
-							System.out.println("SE HA CONECTADO COMO USUARIO CLIENTE NORMAL, BIENVENIDO");
+							// resultadoBusqueda contiene el codigo del usuario que se ha conectado
 							
 							/* APARTADO DEL CLIENTE NORMAL*/
+							System.out.println("\n-- SE HA CONECTADO COMO USUARIO CLIENTE NORMAL, BIENVENIDO --");
+							System.out.println("\nElija una opcion:");
+							System.out.println("1.- Editar sus datos");
+							System.out.println("2.- Editar compra");
+							System.out.println("3.- Realizar compra");
+							System.out.println("4.- Consultar cual es la película mas vista");
+							System.out.println("5.- Desconectarse");
+							System.out.print("\n--- Opcion: ");
+							opcionUsuario=sc.nextInt();
+							
+							if(opcionUsuario==5)
+								System.out.print("\n--- HASTA PRONTO ---\n");
 							
 						}
 						
 						if(codigo.indexOf("CE")!=-1){
 						
-							System.out.println("SE HA CONECTADO COMO USUARIO CLIENTE ESPECIAL, BIENVENIDO");
 							/*APARTADO CLIENTE ESPECIAL*/
+							System.out.println("\n-- SE HA CONECTADO COMO USUARIO CLIENTE ESPECIAL, BIENVENIDO --");
+							System.out.println("\n-- LE RECORDAMOS QUE TIENE UN 30% DE DESCUENTO EN SUS COMPRAS --");
+							System.out.println("\nElija una opcion:");
+							System.out.println("1.- Editar sus datos");
+							System.out.println("2.- Editar compra");
+							System.out.println("3.- Realizar compra");
+							System.out.println("4.- Consultar cual es la película mas vista");
+							System.out.println("5.- Desconectarse");
+							System.out.print("\n--- Opcion: ");
+							opcionUsuario=sc.nextInt();
 							
-						}
+							if(opcionUsuario==5)
+								System.out.print("\n--- HASTA PRONTO ---\n");
+								
+								
+							}
+							
+						
 						
 						
 						if(codigo.indexOf("JF")!=-1){
@@ -277,16 +305,42 @@ public class main {
 							// Hacer funcion para que jefe del cine pueda añadir nuevo cupon para clientes especial
 							
 							/*METODO PARA EL JEFE DEL CINE*/
-							System.out.println("\nSE HA CONECTADO COMO JEFE CINE, BIENVENIDO");
+							System.out.println("\n-- SE HA CONECTADO COMO JEFE DEL CINE, BIENVENIDO --");
+							System.out.println("\nElija una opcion:");
+							System.out.println("1.- Modificar cupones registro para cliente especial");
+							System.out.println("2.- Dar de alta un empleado");
+							System.out.println("3.- Dar de baja un empleado");
+							System.out.println("4.- Cambiar la cartelera");
+							System.out.println("5.- Modificar el tipo de algún usuario registrado");
+							System.out.println("6.- Revisar peticiones pentides de empleados");
+							System.out.println("7.- Enviar las nominas del mes");
+							System.out.println("8.- Desconectarse");
+							System.out.print("\n--- Opcion: ");
+							opcionUsuario=sc.nextInt();
 							
+							
+							
+							if(opcionUsuario==8)
+								System.out.print("\n--- HASTA PRONTO ---\n");
 						}
 						
 						
 						if(codigo.indexOf("EM")!=-1){
 							
+							
 							/*METODO PARA EL EMPLEADO DEL CINE*/
 							
-							System.out.println("SE HA CONECTADO COMO USUARIO EMPLEADO NORMAL, BIENVENIDO");
+							System.out.println("\n-- SE HA CONECTADO COMO EMPLEADO, BIENVENIDO --");
+							System.out.println("\nElija una opcion:");
+							System.out.println("1.- Consultar cual es mi jornada de trabajo");
+							System.out.println("2.- Solicitar un cambio");
+							System.out.println("3.- Desconectarse");
+							System.out.print("\n--- Opcion: ");
+							opcionUsuario=sc.nextInt();
+						
+							
+							if(opcionUsuario==3)
+								System.out.print("\n--- HASTA PRONTO ---\n");
 						}
 					
 							
@@ -295,11 +349,11 @@ public class main {
 				}
 			
 			if(opcion1==3)
-				System.out.println("\n--- HASTA PRONTO ---");
+				System.out.println("\n--- HA CERRADO LA APLICACION ---");
 		
 			
 		}while(opcion1!=3);
-		sc.close();
+		
 	}
 	
 	
@@ -326,7 +380,6 @@ public class main {
             writer.newLine();
             
             writer.close();
-            sc.close();
             
         } catch (IOException x) {
             System.err.format("IOException: %s%n", x);
