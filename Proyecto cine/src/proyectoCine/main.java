@@ -36,7 +36,9 @@ public class main {
 		BD_Cliente bd = new BD_Cliente("mysql-properties.xml");	
 		BD_Usuario bd2 = new BD_Usuario("mysql-properties.xml");
 		
-		int opcion1=0, opcionUsuario;
+		int opcion1=0, opcionUsuario, opcionCupon=0;
+		
+		Vector <String> codigosPromocionales = new Vector <String> (); // Array donde tenemos los codigos promocionales para poder registrarse como usuario especial		
 		
 		System.out.println("|----------------------------------|");
 		System.out.println("|------ BIENVENIDO A NETCINE ------|");
@@ -75,14 +77,9 @@ public class main {
 				String nombre="",apellidos="",dni="",telefono="",correo="",clave="";
 				int tarjeta=0, dia=0,mes=0,anyo=0, tipoCliente=0;
 				LocalDate fechaNacimiento=null;
-				
-				String [] codigosPromocionales = new String [10]; // Array donde tenemos los codigos promocionales para poder registrarse como usuario especial
-				int contadorCodigos=0;
-				
-				codigosPromocionales[0] = "CUPON1";
-				contadorCodigos++;
-				codigosPromocionales[1] = "PROMOCIONESPECIAL";
-				contadorCodigos++;
+								
+				codigosPromocionales.add("CUPON1");
+				codigosPromocionales.add("PROMOCIONESPECIAL");
 				
 				do{
 					try{
@@ -105,8 +102,8 @@ public class main {
 								System.out.println("\nPara poder darte de alta como usuario especal necesitas un codigo promocional.\nIntroduce un codigo promocional valido para poder registrarte como usuario especial:\n ");
 								String leerCodigo=sc.nextLine();
 								
-								for(int i=0;i<contadorCodigos;i++){ // Buscamos si el codigo es correcto
-									if(codigosPromocionales[i].equals(leerCodigo.toUpperCase())){
+								for(int i=0;i<codigosPromocionales.size();i++){ // Buscamos si el codigo es correcto
+									if(codigosPromocionales.get(i).equals(leerCodigo.toUpperCase())){
 										correcto++;								
 									}									
 								}
@@ -257,13 +254,17 @@ public class main {
 						
 												
 						/*Segun el usuario conectado sacamos un menu u otro*/
-						if(codigo.indexOf("CN")!=-1){
+						if(codigo.indexOf("CN")!=-1 || codigo.indexOf("CE")!=-1){
 							
-							// resultadoBusqueda contiene el codigo del usuario que se ha conectado
+							// la variable resultadoBusqueda contiene el codigo del usuario que se ha conectado
 							
 							/* APARTADO DEL CLIENTE NORMAL*/
-							System.out.println("\n-- SE HA CONECTADO COMO USUARIO CLIENTE NORMAL, BIENVENIDO --");
-							System.out.println("\nElija una opcion:");
+							if(codigo.indexOf("CN")!=-1)	
+								System.out.println("\n-- SE HA CONECTADO COMO USUARIO CLIENTE NORMAL, BIENVENIDO --");
+							if(codigo.indexOf("CE")!=-1)
+								System.out.println("\n-- SE HA CONECTADO COMO USUARIO CLIENTE ESPECIAL, BIENVENIDO --");
+							
+							System.out.println("\nElija una opcion:");							
 							System.out.println("1.- Editar sus datos");
 							System.out.println("2.- Editar compra");
 							System.out.println("3.- Realizar compra");
@@ -276,52 +277,99 @@ public class main {
 								System.out.print("\n--- HASTA PRONTO ---\n");
 							
 						}
-						
-						if(codigo.indexOf("CE")!=-1){
-						
-							/*APARTADO CLIENTE ESPECIAL*/
-							System.out.println("\n-- SE HA CONECTADO COMO USUARIO CLIENTE ESPECIAL, BIENVENIDO --");
-							System.out.println("\n-- LE RECORDAMOS QUE TIENE UN 30% DE DESCUENTO EN SUS COMPRAS --");
-							System.out.println("\nElija una opcion:");
-							System.out.println("1.- Editar sus datos");
-							System.out.println("2.- Editar compra");
-							System.out.println("3.- Realizar compra");
-							System.out.println("4.- Consultar cual es la película mas vista");
-							System.out.println("5.- Desconectarse");
-							System.out.print("\n--- Opcion: ");
-							opcionUsuario=sc.nextInt();
-							
-							if(opcionUsuario==5)
-								System.out.print("\n--- HASTA PRONTO ---\n");
-								
-								
-							}
-							
-						
-						
-						
+				
 						if(codigo.indexOf("JF")!=-1){
 							
-							// Hacer funcion para que jefe del cine pueda añadir nuevo cupon para clientes especial
+							do{
 							
-							/*METODO PARA EL JEFE DEL CINE*/
-							System.out.println("\n-- SE HA CONECTADO COMO JEFE DEL CINE, BIENVENIDO --");
-							System.out.println("\nElija una opcion:");
-							System.out.println("1.- Modificar cupones registro para cliente especial");
-							System.out.println("2.- Dar de alta un empleado");
-							System.out.println("3.- Dar de baja un empleado");
-							System.out.println("4.- Cambiar la cartelera");
-							System.out.println("5.- Modificar el tipo de algún usuario registrado");
-							System.out.println("6.- Revisar peticiones pentides de empleados");
-							System.out.println("7.- Enviar las nominas del mes");
-							System.out.println("8.- Desconectarse");
-							System.out.print("\n--- Opcion: ");
-							opcionUsuario=sc.nextInt();
-							
-							
-							
-							if(opcionUsuario==8)
-								System.out.print("\n--- HASTA PRONTO ---\n");
+								System.out.println("\n-- SE HA CONECTADO COMO JEFE DEL CINE, BIENVENIDO --");
+								
+								do{	
+									try{
+										/*METODO PARA EL JEFE DEL CINE*/
+										
+										System.out.println("\nElija una opcion:");
+										System.out.println("1.- Modificar cupones registro para cliente especial");
+										System.out.println("2.- Dar de alta un empleado");
+										System.out.println("3.- Dar de baja un empleado");
+										System.out.println("4.- Cambiar la cartelera");
+										System.out.println("5.- Modificar el tipo de algún usuario registrado");
+										System.out.println("6.- Revisar peticiones pentides de empleados");
+										System.out.println("7.- Enviar las nominas del mes");
+										System.out.println("8.- Desconectarse");
+										System.out.print("\n--- Opcion: ");
+										opcionUsuario=sc.nextInt();
+										
+									}catch(InputMismatchException e){
+										
+										opcionUsuario=9; // Le asigno el 9 para que entre a mostrar el mensaje de error
+										sc.nextLine(); // Limpieza de buffer
+									}
+										
+									if(opcionUsuario==1){
+										
+										do{
+											System.out.print("\n1.- Para quitar cupon\n2.- Para añadir nuevo cupón");
+											opcionCupon=sc.nextInt();
+											
+											if(opcionCupon==1){
+												System.out.print("\nInserte el nuevo cupon que quiere añadir: ");
+												sc.nextLine(); // Limpieza buffer
+												codigosPromocionales.add(sc.nextLine());
+												System.out.print("\nCupon añadido");
+											}
+											
+											else if(opcionCupon==2){
+												sc.nextLine(); // Limpieza de buffer
+												System.out.print("\nInserte el cupon que quiere eliminar: ");
+												String cuponEliminar=sc.nextLine();
+												int eliminado=0; // Variable para saber si lo ha eliminado o no existia
+												for(int i=0;i<codigosPromocionales.size();i++){
+													if(cuponEliminar.toUpperCase().equals(codigosPromocionales.get(i))){
+														codigosPromocionales.remove(i);
+														System.out.print("\n-- El cupon "+cuponEliminar+" ha sido eliminado");
+														eliminado++;
+													}
+													
+												}
+												if(eliminado==0) // En caso de no existir dicho cupon
+													System.out.print("\n-- El cupon "+cuponEliminar+" no se encuentra entre los validos por lo que no se puede eliminar");
+												
+											}
+											
+											else
+												System.out.print("\n--- ERROR, OPCION NO VALIDA\n");
+										
+										}while(opcionCupon!=1 && opcionCupon!=2);
+										//SALIDA opcionCupon==1 || opcionCupon==2		
+										
+										
+									} // Fin opcion 1
+									
+									if(opcionUsuario==2){
+										
+										System.out.println("\n-- Vamos a dar de alta un nuevo empleado");
+										
+										/*AL DAR DE ALTA EL EMPLEADO SE DEBE DE DAR DE ALTA COMO USUARIO Y SE DEB DE DAR DE ALTA SU NOMINA*/
+										
+										
+										
+									}
+									
+									if(opcionUsuario==8)
+										System.out.print("\n--- HASTA PRONTO ---\n");
+								
+									if(opcionUsuario>8){
+										
+										System.out.print("\n--- ERROR, OPCION NO VALIDA\n");
+										
+									}
+								
+								
+								}while(opcionUsuario>8); // Control de errores para que introduzca el jefe de empleado una opcion válida
+								
+							}while(opcionUsuario!=8);
+							// salimos cuando opcionUsuario==8
 						}
 						
 						
