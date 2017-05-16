@@ -417,6 +417,48 @@ public class main {
 									}
 									
 									
+									if(opcionUsuario==3){ // Opcion para dar de baja un empleado
+										
+										sc.nextInt();// Limpieza de buffer
+										
+										String codigoEmpleadoBaja, codigoNominaBaja;
+										
+										System.out.println("\n-- Vamos a dar de baja un nuevo empleado");
+										System.out.println("\n-- Recuerde que al borrar el empleado se borra como empleado, usuario y tambien se elimina su nomina");
+										
+										System.out.print("Introduce el codigo del empleado que desea borrar: ");
+										codigoEmpleadoBaja = sc.nextLine();
+										System.out.print("Introduce el codigo de la nomina del empleado que desea borrar: ");
+										codigoNominaBaja = sc.nextLine();
+									
+										if(bd3.borrarEmpleadoPorCodigoEmple(codigoEmpleadoBaja)!=-1)// Borramos de la bbdd tabla empleados
+											System.out.println("\nEmpleado borrado.\nEliminado de la tabla empledos");
+										else
+											System.out.println("--- No se ha podido borrar de la tabla empleados");
+										
+										if(bd2.borrarUsuarioPorCodigoUsuario(codigoEmpleadoBaja)!=-1) // Borramos de la bbdd tabla usuario
+											System.out.println("\nEliminado de la tabla usuario");
+										else
+											System.out.println("--- No se ha podido borrar de la tabla usuario");
+										
+										if(bd4.borrarNominaPorCodigo(codigoNominaBaja)!=-1) // Borramos de la bbdd tabla Nomina
+											System.out.println("\nNomina borrada.\nEliminada de la tabla nomina");
+										else
+											System.out.println("--- No se ha podido borrar la nomina de este empleado");
+											
+										}
+										
+										
+										
+									
+									
+									
+									
+									
+									
+									
+									
+									
 									
 									
 									if(opcionUsuario==8)
@@ -472,8 +514,7 @@ public class main {
 	/**
 	 * Funcion para escribir cada conexion correcta en el fichero logConexiones.txt que esta en la raiz del proyecto
 	 * @author cesar
-	 */
-	
+	 */	
 	public static void escribirConexionFichero(String cadena) {	
 		
 	
@@ -532,8 +573,7 @@ public class main {
 	 * Funciones para generar el condEmple (codigo de empleado)
 	 * @author cesar
 	 * @return
-	 */
-	
+	 */	
 	public static String crearCodigoEmpleado(BD_Empleado bd){
 		
 		String codigo="";
@@ -562,8 +602,7 @@ public class main {
 	 * Funciones para generar el codCliente normal.
 	 * @author cesar
 	 * @return
-	 */
-	
+	 */	
 	public static String crearCodigoClienteEspecial(BD_Cliente bd){
 		
 		String codigo="";
@@ -591,8 +630,7 @@ public class main {
 	 * Funciones para generar el codCliente especial.
 	 * @author cesar
 	 * @return
-	 */
-	
+	 */	
 	public static String crearCodigoClienteNormal(BD_Cliente bd){
 		
 		String codigo="";

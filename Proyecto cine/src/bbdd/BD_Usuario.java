@@ -49,6 +49,32 @@ public class BD_Usuario extends BD_Conector {
 	}	
 	
 	/**
+	 * Funcion que nos elimina un usuario de la aplicacion a través de su codigo
+	 * @author cesar
+	 * @param codigoUsuarioBorrar
+	 * @return
+	 */
+	
+	public int borrarUsuarioPorCodigoUsuario(String codigoUsuarioBorrar){
+		
+		String consulta = "DELETE FROM usuario WHERE codusuario='" +  codigoUsuarioBorrar + "'";	
+		
+		try{
+			this.abrir();
+			s=c.createStatement();
+			int filas=s.executeUpdate(consulta);	
+			s.close();
+			this.cerrar();
+			return filas;
+			
+		}
+		catch ( SQLException e){
+			this.cerrar();
+			return -1;
+			}
+	}
+	
+	/**
 	 * 
 	 * @author cesar
 	 * @param usu

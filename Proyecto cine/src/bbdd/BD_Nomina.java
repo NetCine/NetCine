@@ -40,6 +40,30 @@ public class BD_Nomina extends BD_Conector {
 			return false;
 		}
 	}
+	/** 
+	 * Borrar una nomina dado su codigo
+	 * @author cesar
+	 * @param nom
+	 * @return
+	 */
+	public int borrarNominaPorCodigo(String codigoNomina){
+		
+		String consulta = "DELETE FROM nomina WHERE codnomina='" + codigoNomina + "'";	
+		
+		try{
+			this.abrir();
+			s=c.createStatement();
+			int filas=s.executeUpdate(consulta);	
+			s.close();
+			this.cerrar();
+			return filas;
+			
+		}
+		catch ( SQLException e){
+			this.cerrar();
+			return -1;
+			}
+	}
 	
 	/**
 	 * Metodo para borrar una nomina que se pasa por parametro

@@ -48,6 +48,31 @@ public class BD_Empleado extends BD_Conector {
 	}	
 	
 	/**
+	 * Funcion para borrar el empleado que tiene un determinado codigo
+	 * @author cesar
+	 * @param cl
+	 * @return
+	 */
+	public int borrarEmpleadoPorCodigoEmple(String codigoEmpleadoBorrar){
+		
+		String consulta = "DELETE FROM empleado WHERE codemple='" +  codigoEmpleadoBorrar + "'";	
+		
+		try{
+			this.abrir();
+			s=c.createStatement();
+			int filas=s.executeUpdate(consulta);	
+			s.close();
+			this.cerrar();
+			return filas;
+			
+		}
+		catch ( SQLException e){
+			this.cerrar();
+			return -1;
+			}
+	}
+	
+	/**
 	 * 
 	 * @author cesar
 	 * @param cl
