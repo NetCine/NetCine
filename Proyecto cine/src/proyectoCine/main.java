@@ -38,6 +38,8 @@ public class main {
 		BD_Usuario bd2 = new BD_Usuario("mysql-properties.xml");
 		BD_Empleado bd3 = new BD_Empleado("mysql-properties.xml");
 		BD_Nomina bd4 = new BD_Nomina("mysql-properties.xml");
+		BD_Pelicula bd5 = new BD_Pelicula("mysql-properties.xml");
+		BD_Sesion bd6 = new BD_Sesion("mysql-properties.xml");
 		
 		int opcion1=0, opcionUsuario, opcionCupon=0;
 		
@@ -449,7 +451,70 @@ public class main {
 											
 										}
 									
-									
+									if(opcionUsuario==4){ // Opcion para cambiar la cartelera de nuestro cine
+										
+										String nombrePeliculaNueva, codigoPeliculaNueva;
+										
+										int seleccionOpcionCuatro;
+										
+										do{
+											System.out.println("\n--- Vamos a modificar la cartelera, tenemos las siguientes opciones: ");
+											System.out.println("1.- Añadir pelicula y sesion");
+											System.out.println("2.- Añadir sesion para una pelicula que ya tenemos");
+											System.out.println("3.- Eliminar pelicula y su sesion");
+											System.out.println("4.- Salir");
+											System.out.println("--- Opcion: ");
+											seleccionOpcionCuatro=sc.nextInt();
+											
+											if(seleccionOpcionCuatro>4)
+												System.out.println("--- Opcion no valida");
+											
+										}while (seleccionOpcionCuatro>4);
+										
+										if(seleccionOpcionCuatro==1){ // Añadir pelicula y sesion
+											System.out.println("\n-- Vamos a añadir pelicula y sesion");
+											System.out.print("\nIntroduce nombre de la pelicula nueva: ");
+											sc.nextLine(); // Limpiamos el buffer
+											nombrePeliculaNueva = sc.nextLine();
+											// Creamos el codigo de la pelicula nueva
+											codigoPeliculaNueva = crearCodigoPelicula(bd5);
+											
+											// Creamos la pelicula nueva
+											Pelicula peli = new Pelicula(nombrePeliculaNueva, codigoPeliculaNueva);
+											
+											if(bd5.añadirPelicula(peli)!=false)
+												System.out.println("\nLa pelicula "+nombrePeliculaNueva+" ha sido añadida");
+											else
+												System.out.println("\n-- ERROR, la pelicula no se ha podido añadir");
+											
+											System.out.println("\n-- Vamos a añadir la sesion");
+											System.out.print("\nIntroduce numero de la sala: ");
+											int numeroSala=sc.nextInt();
+											System.out.print("\nIntroduce dia de la sala: ");
+											int diaSala=sc.nextInt();
+											System.out.print("\nIntroduce mes de la sala: ");
+											int mesSala=sc.nextInt();
+											System.out.print("\nIntroduce anyo de la sala: ");
+											int anyoSala=sc.nextInt();
+											// creamos la fecha
+											LocalDate fechaSala=LocalDate.of(anyoSala, mesSala, diaSala);
+											// creamos codigo sesion nueva
+											String codigoSesionNueva = crearCodigoSesion(bd6);
+											// creamos la sesion
+											Sesion ss= new Sesion(codigoSesionNueva,codigoPeliculaNueva,numeroSala,fechaSala);
+											
+											// metemos esta nueva sesion en bbdd
+											if(bd6.añadirSesion(ss)!=false)
+												System.out.println("\nLa sesion ha sido añadida");
+											else
+												System.out.println("\n-- ERROR, la sesion no se ha podido añadir");
+										}
+										
+										if(seleccionOpcionCuatro==4)
+											System.out.println("-- Ha elegido no hacer mas modificaciones sobre la cartelera");
+										
+										
+									} // Fin opcion 4
 										
 										
 										
@@ -736,5 +801,66 @@ public class main {
 		return codigo;
 		
 	}
+	
+	/**
+	 * Metodo para crear el codigo de una nueva sesion
+	 * @author cesar
+	 * @param bd
+	 * @return
+	 */
+	public static String crearCodigoSesion(BD_Sesion bd){
+		
+		String codigo="";
+		int numeroCodigo = bd.contadorSesion();
+		numeroCodigo++;
 
+		// El codigo para un cliente especial se genera con las siglas PL mas los ceros que necesite segun los usuarios que ya haya
+		
+		if(numeroCodigo<10)
+			codigo="SE"+"000"+numeroCodigo;
+		
+		if(numeroCodigo>=10 && numeroCodigo<=99)
+			codigo = "SE"+"00"+numeroCodigo;
+		
+		if(numeroCodigo>99)
+			codigo = "SE"+"0"+numeroCodigo;
+		
+		if(numeroCodigo>999)
+			codigo = "SE"+numeroCodigo;
+		
+		return codigo;
+		
+		
+	}
+
+	/**
+	 * Metodo que crea el codigo de las peliculas nuevas
+	 * @author cesar
+	 * @param bd
+	 * @return
+	 */
+	public static String crearCodigoPelicula(BD_Pelicula bd){
+		
+		String codigo="";
+		int numeroCodigo = bd.contadorPeliculas();
+		numeroCodigo++;
+
+		// El codigo para un cliente especial se genera con las siglas PL mas los ceros que necesite segun los usuarios que ya haya
+		
+		if(numeroCodigo<10)
+			codigo="PL"+"000"+numeroCodigo;
+		
+		if(numeroCodigo>=10 && numeroCodigo<=99)
+			codigo = "PL"+"00"+numeroCodigo;
+		
+		if(numeroCodigo>99)
+			codigo = "PL"+"0"+numeroCodigo;
+		
+		if(numeroCodigo>999)
+			codigo = "PL"+numeroCodigo;
+		
+		return codigo;
+		
+		
+	}
 }
