@@ -40,6 +40,7 @@ public class main {
 		BD_Nomina bd4 = new BD_Nomina("mysql-properties.xml");
 		BD_Pelicula bd5 = new BD_Pelicula("mysql-properties.xml");
 		BD_Sesion bd6 = new BD_Sesion("mysql-properties.xml");
+		BD_Peticion bd7 = new BD_Peticion ("mysql-properties.xml");
 		
 		int opcion1=0, opcionUsuario, opcionCupon=0;
 		
@@ -67,7 +68,7 @@ public class main {
 				}
 				
 				if(opcion1!=1 && opcion1!=2 && opcion1!=3)
-					System.out.println("\n--- ERROR. Opcion no valida, debe ser 1 para registo o 2 para entrar\n ");
+					System.out.println("\n--- ERROR. Opcion no valida, debe ser 1 para registo o 2 para entrar o 3 para salir\n ");
 				
 			}while(opcion1!=1 && opcion1!=2 && opcion1!=3);
 			
@@ -275,7 +276,7 @@ public class main {
 							System.out.println("3.- Realizar compra");
 							System.out.println("4.- Consultar cual es la película mas vista");
 							System.out.println("5.- Desconectarse");
-							System.out.print("\n--- Opcion: ");
+							System.out.print("--- Opcion: ");
 							opcionUsuario=sc.nextInt();
 							
 							if(opcionUsuario==5)
@@ -287,7 +288,7 @@ public class main {
 							
 							do{
 							
-								System.out.println("\n-- CONECTADO COMO JEDE DEL CINE, SU MENU ES EL SIGUIENTE --");
+								System.out.println("\n-- CONECTADO COMO JEFE DEL CINE, SU MENU ES EL SIGUIENTE --");
 								
 								do{	
 									try{
@@ -303,7 +304,7 @@ public class main {
 										System.out.println("7.- Revisar peticiones pendientes de empleados");
 										System.out.println("8.- Sacar las nominas de los empleados");
 										System.out.println("9.- Desconectarse");
-										System.out.print("\n--- Opcion: ");
+										System.out.print("--- Opcion: ");
 										opcionUsuario=sc.nextInt();
 										
 									}catch(InputMismatchException e){
@@ -651,9 +652,53 @@ public class main {
 									
 									
 									if(opcionUsuario==7){  // Revisar peticiones pendientes de empleados
+										Vector <Peticion> peticionesPendientesRevision = new Vector <Peticion> ();
+										
+										peticionesPendientesRevision=bd7.listaPeticionesPendientes();
+										
+										if(peticionesPendientesRevision!=null){ // Si tenemos peticiones por revisar
+											System.out.println("\nTenemos las siguientes peticiones sin revisar: \n");	
+											for(int i=0;i<peticionesPendientesRevision.size();i++){
+												System.out.println(peticionesPendientesRevision.get(i).toString());											
+												
+											}
+											// ponemos como vistas todas las peticiones ya que todas han sido vistas
+											bd7.ponerPeticionesComoRevisadas();
+											
+											int opcionModificarPeticion=0;
+											
+											try{
+												do{
+													System.out.print("\n-- 1.- Para modificar estado de peticion.\n2.- Para no modificar ninguna peticion: ");
+													opcionModificarPeticion=sc.nextInt();
+													
+													if(opcionModificarPeticion==1){ // Vamos a modificar el estado de alguna peticion y por tanto ha aceptarla
+														System.out.print("\n-- Introduce codigo de peticion que quieres poner a true (aceptada): ");	
+														sc.nextLine(); // Limpiamos buffer
+														String codigoPeticionCambio=sc.nextLine();
+														
+														if(bd7.aceptarPeticion(codigoPeticionCambio)!=-1) // Pasamos a aceptada la peticion cuyo codigo nos ha dado el jefe del cine
+															System.out.print("\n-- La peticion de codigo: " + codigoPeticionCambio + " ha sido aceptada");
+														else
+															System.out.print("\n-- Esa peticion no se ha podido poner como aceptada");
+														
+													}
+													else if(opcionModificarPeticion==2)
+														System.out.println("\n-- Ha elegido no modificar ninguna peticion");
+														
+													else
+														System.out.println("\n-- Opcion erronea, inserte opcion valida");
+												}while(opcionModificarPeticion!=2);
+											
+											}catch(InputMismatchException e){
+												System.out.println("\n-- Opcion erronea, inserte opcion valida");												
+											}
+										}
 										
 										
-									}
+										else
+											System.out.println("\n-- No tienes peticiones pendientes de revision");
+									} // Fin opcion 7
 									
 									
 									if(opcionUsuario==8){ // Sacar nominas de empleados
@@ -690,7 +735,7 @@ public class main {
 												escribirNominas(empleadosSalario.get(i));
 										}
 										
-									}
+									} // Fin opcion 8
 									
 									
 									if(opcionUsuario==9)
@@ -718,9 +763,10 @@ public class main {
 							System.out.println("\n-- SE HA CONECTADO COMO EMPLEADO, BIENVENIDO --");
 							System.out.println("\nElija una opcion:");
 							System.out.println("1.- Consultar cual es mi jornada de trabajo");
-							System.out.println("2.- Solicitar un cambio");
-							System.out.println("3.- Desconectarse");
-							System.out.print("\n--- Opcion: ");
+							System.out.println("2.- Añadir peticion nueva");
+							System.out.println("3.- Ver peticiones aceptadas");
+							System.out.println("4.- Desconectarse");
+							System.out.print("--- Opcion: ");
 							opcionUsuario=sc.nextInt();
 						
 							
