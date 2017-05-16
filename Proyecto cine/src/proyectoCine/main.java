@@ -681,8 +681,10 @@ public class main {
 										}
 										
 										else{ // Escribimos en el fichero Nominas.txt
-											String cabecera="DNI\t\tCANTIDAD(€)";
+											
+											String cabecera="DNI\t\t    CANTIDAD(euros)";
 											System.out.println("\n -- Se escribe la informacion en el fichero Nominas.txt");
+											escribirNominas("Nominas generadas el dia: "+LocalDate.now());
 											escribirNominas(cabecera);
 											for (int i=0;i<empleadosSalario.size();i++)
 												escribirNominas(empleadosSalario.get(i));
@@ -749,7 +751,7 @@ public class main {
         Path file= Paths.get("Nominas.txt");
         Charset charset = Charset.forName("UTF-8");
         //Creamos un BufferedWriter de java.io de forma eficiente utilizando Files de java.nio
-        try (BufferedWriter writer = Files.newBufferedWriter(file, charset)) {
+        try (BufferedWriter writer = Files.newBufferedWriter(file, charset, APPEND)) {
 
             Scanner sc=new Scanner(System.in);            
 
