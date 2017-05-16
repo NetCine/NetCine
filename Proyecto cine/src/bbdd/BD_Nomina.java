@@ -1,6 +1,8 @@
 package bbdd;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.util.Vector;
 
 import modelos.*;
 
@@ -146,5 +148,33 @@ public class BD_Nomina extends BD_Conector {
 		}	
 	}	
 	
-	
+	/** Funcion que nos va a dar un vector con el listado de dni y nomina de cada empleado
+	 * @author cesar
+	 * @return
+	 */
+	public  Vector <String> listaEmpleadosSalario(){
+		String cadenaSQL="SELECT dni, cantidad from nomina";
+		
+		Vector <String> salarioEmpleado = new Vector <String> ();
+		String cadena;
+		
+		try{
+			this.abrir();
+			s=c.createStatement();
+			reg=s.executeQuery(cadenaSQL);
+			while ( reg.next()){
+				
+				//java.sql.Date f=reg.getDate("jornadas"); // Cogemos la fecha que tenemos en la bbdd en el registro cuyo nombre es jornadas
+				//LocalDate fBuena=f.toLocalDate(); // Pasamos esa ficha a LocalDate (que es lo que necesitamos en nuestro constructor)
+				cadena = reg.getString("dni") + "\t" + reg.getString("cantidad");
+				salarioEmpleado.add(cadena);
+			}
+			s.close();
+			this.cerrar();
+			return salarioEmpleado;
+		}
+		catch ( SQLException e){		
+			return null;			
+		}
+	}
 }

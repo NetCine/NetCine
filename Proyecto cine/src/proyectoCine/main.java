@@ -287,7 +287,7 @@ public class main {
 							
 							do{
 							
-								System.out.println("\n-- HOLA JEFE DEL CINE, BIENVENIDO --");
+								System.out.println("\n-- CONECTADO COMO JEDE DEL CINE, SU MENU ES EL SIGUIENTE --");
 								
 								do{	
 									try{
@@ -301,7 +301,7 @@ public class main {
 										System.out.println("5.- Ver todos los empleados del cine");
 										System.out.println("6.- Modificar el tipo de algún usuario registrado");
 										System.out.println("7.- Revisar peticiones pendientes de empleados");
-										System.out.println("8.- Enviar las nominas del mes");
+										System.out.println("8.- Sacar las nominas de los empleados");
 										System.out.println("9.- Desconectarse");
 										System.out.print("\n--- Opcion: ");
 										opcionUsuario=sc.nextInt();
@@ -650,8 +650,45 @@ public class main {
 									
 									
 									
+									if(opcionUsuario==7){  // Revisar peticiones pendientes de empleados
+										
+										
+									}
 									
 									
+									if(opcionUsuario==8){ // Sacar nominas de empleados
+										
+										Vector <String> empleadosSalario = new Vector <String> ();
+										empleadosSalario = bd4.listaEmpleadosSalario();
+										int opcionNominas=0;
+										
+										try{
+											do{	
+												System.out.println("\n1.- Para imprimir por pantalla o 2.- Para mandarlo a un fichero");
+												System.out.print("Opcion: ");
+												opcionNominas=sc.nextInt();
+												if(opcionNominas!=1 && opcionNominas!=2)
+													System.out.println("\n--- ERROR, opcion no valida");
+											}while(opcionNominas!=1 && opcionNominas!=2);
+										}catch(InputMismatchException e){
+											System.out.print("\nOpcion no valida");											
+										}
+										if(opcionNominas==1){ // Escribimos por pantalla
+											System.out.println("\n-- El listado de todas las nominas de los empleados del cine es el siguiente: ");
+											System.out.println("\nDNI\t\tCANTIDAD(€)");
+											for (int i=0;i<empleadosSalario.size();i++)
+												System.out.println(empleadosSalario.get(i));
+										}
+										
+										else{ // Escribimos en el fichero Nominas.txt
+											String cabecera="DNI\t\tCANTIDAD(€)";
+											System.out.println("\n -- Se escribe la informacion en el fichero Nominas.txt");
+											escribirNominas(cabecera);
+											for (int i=0;i<empleadosSalario.size();i++)
+												escribirNominas(empleadosSalario.get(i));
+										}
+										
+									}
 									
 									
 									if(opcionUsuario==9)
@@ -702,14 +739,39 @@ public class main {
 		
 	}
 	
+	/**
+	 * Metodo para que el jefe del cine pueda escribir todas las nominas en un txt y poder imprimir el documento para poder realizar los ingresos
+	 * @author cesar
+	 * @param cadena
+	 */
+	public static void escribirNominas(String cadena) {			
+		
+        Path file= Paths.get("Nominas.txt");
+        Charset charset = Charset.forName("UTF-8");
+        //Creamos un BufferedWriter de java.io de forma eficiente utilizando Files de java.nio
+        try (BufferedWriter writer = Files.newBufferedWriter(file, charset)) {
+
+            Scanner sc=new Scanner(System.in);            
+
+            writer.newLine(); // Metemos un salto de linea
+            
+            writer.write(cadena); // Copiamos la cadena con correco clave y fecha de conexion que hemos generado antes
+            //Escribimos nueva línea para separarlas
+            writer.newLine();
+            
+            writer.close();
+            
+        } catch (IOException x) {
+            System.err.format("IOException: %s%n", x);
+        }
 	
+	}	
 	
 	/**
 	 * Funcion para escribir cada conexion correcta en el fichero logConexiones.txt que esta en la raiz del proyecto
 	 * @author cesar
 	 */	
-	public static void escribirConexionFichero(String cadena) {	
-		
+	public static void escribirConexionFichero(String cadena) {			
 	
         Path file= Paths.get("logConexiones.txt");
         Charset charset = Charset.forName("UTF-8");
