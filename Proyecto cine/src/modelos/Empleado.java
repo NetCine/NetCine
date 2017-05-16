@@ -237,6 +237,20 @@ public class Empleado {
 	}
 
 	
+	@Override
+	/**
+	 * toString para la clase empleado
+	 * @author cesar
+	 */
+	public String toString() {
+		return "Codigo de empleado: " + codEmple + ", con nombre: " + nombre
+				+ " " + apellidos + ", con dni: " + dni + ", telefono de contacto: "
+				+ telefono + ", con email: " + correo + ", cuya clave de acceso es: " + clave
+				+ ", codigo de nomina: " + codNomina + ", su funcion en el cine es: " + funcion
+				+ " y la descipcion de su puesto: " + descipcionPuesto + ", su fecha de entrada: " + fecha;
+	}
+
+	
 	
 	
 	

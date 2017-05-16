@@ -285,7 +285,7 @@ public class main {
 							
 							do{
 							
-								System.out.println("\n-- SE HA CONECTADO COMO JEFE DEL CINE, BIENVENIDO --");
+								System.out.println("\n-- HOLA JEFE DEL CINE, BIENVENIDO --");
 								
 								do{	
 									try{
@@ -294,12 +294,13 @@ public class main {
 										System.out.println("\nElija una opcion:");
 										System.out.println("1.- Modificar cupones registro para cliente especial");
 										System.out.println("2.- Dar de alta un empleado");
-										System.out.println("3.- Dar de baja un empleado");
+										System.out.println("3.- Dar de baja un empleado");										
 										System.out.println("4.- Cambiar la cartelera");
-										System.out.println("5.- Modificar el tipo de algún usuario registrado");
-										System.out.println("6.- Revisar peticiones pendientes de empleados");
-										System.out.println("7.- Enviar las nominas del mes");
-										System.out.println("8.- Desconectarse");
+										System.out.println("5.- Ver todos los empleados del cine");
+										System.out.println("6.- Modificar el tipo de algún usuario registrado");
+										System.out.println("7.- Revisar peticiones pendientes de empleados");
+										System.out.println("8.- Enviar las nominas del mes");
+										System.out.println("9.- Desconectarse");
 										System.out.print("\n--- Opcion: ");
 										opcionUsuario=sc.nextInt();
 										
@@ -450,6 +451,23 @@ public class main {
 										
 										
 										
+									if(opcionUsuario==5){ // Opcion que muestra todos los empleados del cine
+										
+										System.out.println("\n-- Vamos a ver todos los empleados del cine");								
+																				
+										Vector <Empleado> EmpleadosCine = new Vector <Empleado> ();
+										
+										for(int i=0;i<bd3.listaEmpleadosCine().size();i++) // Copiamos el resultado de la select en nuestro vector de empleados cine
+											EmpleadosCine.add(bd3.listaEmpleadosCine().get(i));
+										
+										if(EmpleadosCine!=null){ // Imprimimos todos los empleados del cine					
+											System.out.println("-- Tenemos los siguientes empleados:\n");
+											for(int i=0;i<EmpleadosCine.size();i++)
+												System.out.println(EmpleadosCine.get(i).toString());											
+										}
+										else
+											System.out.println("--- Actualmente no tenemos empleados en el cine");
+									}
 									
 									
 									
@@ -461,19 +479,19 @@ public class main {
 									
 									
 									
-									if(opcionUsuario==8)
+									if(opcionUsuario==9)
 										System.out.print("\n--- HASTA PRONTO ---\n");
 								
-									if(opcionUsuario>8){
+									if(opcionUsuario>9){
 										
 										System.out.print("\n--- ERROR, OPCION NO VALIDA\n");
 										
 									}
 								
 								
-								}while(opcionUsuario>8); // Control de errores para que introduzca el jefe de empleado una opcion válida
+								}while(opcionUsuario>9); // Control de errores para que introduzca el jefe de empleado una opcion válida
 								
-							}while(opcionUsuario!=8);
+							}while(opcionUsuario!=9);
 							// salimos cuando opcionUsuario==8
 						}
 						

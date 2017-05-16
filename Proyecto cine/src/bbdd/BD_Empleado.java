@@ -1,6 +1,8 @@
 package bbdd;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.util.*;
 
 import modelos.*;
 
@@ -30,9 +32,9 @@ public class BD_Empleado extends BD_Conector {
 	 * @return
 	 */
 	public boolean añadirEmpleado(Empleado emple){
+		
 		String consulta = "INSERT INTO empleado VALUES('" + emple.getCodEmple() + "','" + emple.getNombre() + "','" + emple.getApellidos() + "','" + emple.getDni() + "','" + emple.getTelefono() + "','" + emple.getCorreo() + "','" + emple.getClave() + "','" + emple.getFecha() + "','" + emple.getCodNomina() + "','" + emple.getFuncion() + "','" + emple.getDescipcionPuesto() + "')";
-	
-	
+		
 		try{
 			this.abrir();
 			s=c.createStatement();
@@ -106,6 +108,7 @@ public class BD_Empleado extends BD_Conector {
 	
 	// Pasamos un empleado con nombre apellidos y dni y nos devuelve su codigo
 	public  String buscarEmpleado(Empleado emple){
+		
 		String cadena="SELECT codemple FROM empleado WHERE nombre='" + emple.getNombre()+"' AND apellidos='" + emple.getApellidos()+"' AND dni='" + emple.getDni()+"'";
 		
 		try{
@@ -154,5 +157,40 @@ public class BD_Empleado extends BD_Conector {
 			return -1;			
 		}	
 	}
+	
+	/**
+	 * Funcion que nos permite mostrar todos los empleados que tiene nuestra aplicacion
+	 * @author cesar
+	 * @param bd
+	 * @return
+	 */
+	
+	
+	public  Vector <Empleado> listaEmpleadosCine(){
+		String cadenaSQL="SELECT * from empleado";
+		
+		Vector <Empleado> listaEmpleados = new Vector <Empleado> ();
+		
+		try{
+			this.abrir();
+			s=c.createStatement();
+			reg=s.executeQuery(cadenaSQL);
+			while ( reg.next()){
+				
+				java.sql.Date f=reg.getDate("jornadas"); // Cogemos la fecha que tenemos en la bbdd en el registro cuyo nombre es jornadas
+				LocalDate fBuena=f.toLocalDate(); // Pasamos esa ficha a LocalDate (que es lo que necesitamos en nuestro constructor)
+				
+				listaEmpleados.add(new Empleado(reg.getString("codemple"),reg.getString("nombre"),reg.getString("apellidos"),reg.getString("dni"),reg.getString("telefono"),reg.getString("correo"),reg.getString("clave"),reg.getString("codnomina"),reg.getString("funcion"),reg.getString("descripcionpuesto"),fBuena));
+				
+			}
+			s.close();
+			this.cerrar();
+			return listaEmpleados;
+		}
+		catch ( SQLException e){		
+			return null;			
+		}
+	}
+	
 	
 }
