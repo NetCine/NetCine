@@ -15,13 +15,14 @@ import java.time.LocalDate; // Import para localdate
 // imports para fichero
 
 import java.io.BufferedWriter;
-
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
 import static java.nio.file.StandardOpenOption.*;
+
 import java.time.*;
 /**
  * Programa principal del proyecto
@@ -35,6 +36,8 @@ public class main {
 		
 		BD_Cliente bd = new BD_Cliente("mysql-properties.xml");	
 		BD_Usuario bd2 = new BD_Usuario("mysql-properties.xml");
+		BD_Empleado bd3 = new BD_Empleado("mysql-properties.xml");
+		BD_Nomina bd4 = new BD_Nomina("mysql-properties.xml");
 		
 		int opcion1=0, opcionUsuario, opcionCupon=0;
 		
@@ -294,7 +297,7 @@ public class main {
 										System.out.println("3.- Dar de baja un empleado");
 										System.out.println("4.- Cambiar la cartelera");
 										System.out.println("5.- Modificar el tipo de algún usuario registrado");
-										System.out.println("6.- Revisar peticiones pentides de empleados");
+										System.out.println("6.- Revisar peticiones pendientes de empleados");
 										System.out.println("7.- Enviar las nominas del mes");
 										System.out.println("8.- Desconectarse");
 										System.out.print("\n--- Opcion: ");
@@ -306,20 +309,20 @@ public class main {
 										sc.nextLine(); // Limpieza de buffer
 									}
 										
-									if(opcionUsuario==1){
+									if(opcionUsuario==1){ // Opcion modificar cupones de registro
 										
 										do{
 											System.out.print("\n1.- Para quitar cupon\n2.- Para añadir nuevo cupón");
 											opcionCupon=sc.nextInt();
 											
-											if(opcionCupon==1){
+											if(opcionCupon==1){ // En caso de querer quitar un cupon
 												System.out.print("\nInserte el nuevo cupon que quiere añadir: ");
 												sc.nextLine(); // Limpieza buffer
 												codigosPromocionales.add(sc.nextLine());
 												System.out.print("\nCupon añadido");
 											}
 											
-											else if(opcionCupon==2){
+											else if(opcionCupon==2){ // En caso de querer añadir un cupon
 												sc.nextLine(); // Limpieza de buffer
 												System.out.print("\nInserte el cupon que quiere eliminar: ");
 												String cuponEliminar=sc.nextLine();
@@ -346,15 +349,75 @@ public class main {
 										
 									} // Fin opcion 1
 									
-									if(opcionUsuario==2){
+									if(opcionUsuario==2){ // Dar de alta un empleado
 										
 										System.out.println("\n-- Vamos a dar de alta un nuevo empleado");
 										
-										/*AL DAR DE ALTA EL EMPLEADO SE DEBE DE DAR DE ALTA COMO USUARIO Y SE DEB DE DAR DE ALTA SU NOMINA*/
+										/*AL DAR DE ALTA EL EMPLEADO SE DEBE DE DAR DE ALTA COMO USUARIO Y SE DEBE DE DAR DE ALTA SU NOMINA*/
 										
+										sc.nextLine(); // Limpiamos el buffer
 										
+										// Variables para dar de alta el nuevo empleado
+										String nombreEmple,apellidosEmple,dniEmple,telefonoEmple,correoEmple,claveEmple, funcion, puesto;
+										LocalDate fecha;
+										double salario;
+										
+										System.out.print("Introduce nombre del nuevo empleado: ");
+										nombreEmple=sc.nextLine();
+										System.out.print("Introduce apellidos del nuevo empleado: ");
+										apellidosEmple=sc.nextLine();
+										System.out.print("Introduce DNI del nuevo empleado: ");
+										dniEmple=sc.nextLine();
+										System.out.print("Introduce telefono del nuevo empleado: ");
+										telefonoEmple=sc.nextLine();
+										System.out.print("Introduce correo del nuevo empleado: ");
+										correoEmple=sc.nextLine();
+										System.out.print("Introduce clave de acceso del nuevo empleado: ");
+										claveEmple=sc.nextLine();
+										System.out.print("Introduce jornada del nuevo empleado: ");
+										fecha=LocalDate.now(); // Metemos la fecha en la que se le da de alta
+										System.out.print("Introduce funcion del nuevo empleado: ");
+										funcion=sc.nextLine();
+										System.out.print("Introduce puesto del nuevo empleado: ");
+										puesto=sc.nextLine();
+										System.out.print("Introduce salario para el nuevo empleado: ");
+										salario=sc.nextDouble();
+										// Objetos para añadir a la bbdd
+										Empleado emple;
+										Nomina nom;
+										Usuario usuEmpleado;
+										
+										// Generamos ambos codigos el del empleado y el de la nomina
+										String codEmple = crearCodigoEmpleado(bd3);
+										String codNomina = crearCodigoNomina (bd4); 
+										
+										// Creo los objetos
+										emple = new Empleado(codEmple, nombreEmple, apellidosEmple, dniEmple, telefonoEmple, correoEmple,	claveEmple, codNomina, funcion, puesto, fecha);
+										nom = new Nomina(salario, dniEmple, codNomina);
+										usuEmpleado = new Usuario(codEmple, correoEmple, clave);
+										
+										// damos de alta en tabla empleados
+										if ( bd3.añadirEmpleado(emple)) // Insertamos en la bbdd
+											System.out.println("\nEmpleado dado de alta.\nAñadido en la tabla empledos");		
+										else
+											System.out.println("--- No se ha podido añadir en la tabla empleados");
+										
+										// damos de alta en tabla nominas
+										if ( bd4.añadirNomina(nom)) // Insertamos en la bbdd
+											System.out.println("\nNomina dada de alta.\nAñadido en la tabla nomina");		
+										else
+											System.out.println("--- No se ha podido añadir en la tabla nomina");
+										
+										// damos de alta en tabla usuario
+										if ( bd2.añadirUsuario(usuEmpleado)) // Insertamos en la bbdd
+											System.out.println("\nNuevo usuario dado de alta.\nAñadido en la tabla usuario");		
+										else
+											System.out.println("--- No se ha podido añadir en la tabla usuario");										
 										
 									}
+									
+									
+									
 									
 									if(opcionUsuario==8)
 										System.out.print("\n--- HASTA PRONTO ---\n");
@@ -434,6 +497,65 @@ public class main {
         }
 	
 	}	
+	
+	/**
+	 * Funcion para generar el codigo de una nueva nomina
+	 * @author cesar
+	 * @param bd
+	 * @return
+	 */
+	public static String crearCodigoNomina (BD_Nomina bd){
+		
+		String codigo="";
+		int numeroCodigo = bd.contadorNominas();
+		numeroCodigo++; // El codigo será las siglas mas el numero de nominas +1
+		
+		// El codigo para una nomina se genera con las siglas NM mas los ceros que necesite segun los usuarios que ya haya
+		
+		if(numeroCodigo<10)
+			codigo="NM"+"000"+numeroCodigo;
+		
+		if(numeroCodigo>=10 && numeroCodigo<=99)
+			codigo = "NM"+"00"+numeroCodigo;
+		
+		if(numeroCodigo>99)
+			codigo = "NM"+"0"+numeroCodigo;
+		
+		if(numeroCodigo>999)
+			codigo = "NM"+numeroCodigo;
+		
+		return codigo;
+	}
+	
+	
+	/**
+	 * Funciones para generar el condEmple (codigo de empleado)
+	 * @author cesar
+	 * @return
+	 */
+	
+	public static String crearCodigoEmpleado(BD_Empleado bd){
+		
+		String codigo="";
+		int numeroCodigo = bd.contadorEmpleados();
+		numeroCodigo++;
+		
+		// El codigo para un cliente especial se genera con las siglas EM mas los ceros que necesite segun los usuarios que ya haya
+		
+		if(numeroCodigo<10)
+			codigo="EM"+"000"+numeroCodigo;
+		
+		if(numeroCodigo>=10 && numeroCodigo<=99)
+			codigo = "EM"+"00"+numeroCodigo;
+		
+		if(numeroCodigo>99)
+			codigo = "EM"+"0"+numeroCodigo;
+		
+		if(numeroCodigo>999)
+			codigo = "EM"+numeroCodigo;
+		
+		return codigo;
+	}
 	
 	
 	/**

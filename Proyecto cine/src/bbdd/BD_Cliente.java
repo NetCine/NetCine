@@ -82,9 +82,9 @@ public class BD_Cliente extends BD_Conector {
 	 * @return
 	 */
 	
-	public String buscarCLiente(Cliente cl){ // Devolvemos el codigo del cliente
+	public String buscarCliente(Cliente cl){ // Devolvemos el codigo del cliente
 	
-		String consulta = "SELECT codcliente FROM cliente WHERE  nombre='" + cl.getNombre()+"' AND apellidos='" + cl.getApellidos()+"' AND dni='" + "'";
+		String consulta = "SELECT codcliente FROM cliente WHERE  nombre='" + cl.getNombre()+"' AND apellidos='" + cl.getApellidos()+"' AND dni='" + cl.getDni() + "'";
 		
 		try{
 			String t="";

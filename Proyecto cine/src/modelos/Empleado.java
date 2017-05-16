@@ -4,7 +4,7 @@ import java.util.*;
 import java.time.*;
 
 /**
- * 
+ * Clase para lo refente al objeto empleado del cine
  * @author cesar
  *
  */
@@ -12,10 +12,10 @@ import java.time.*;
 public class Empleado {
 	
 	private String codEmple, nombre, apellidos, dni, telefono, correo, clave, codNomina, funcion, descipcionPuesto;
-	private GregorianCalendar fecha;
+	private LocalDate fecha;
 	
 	/**
-	 * 
+	 * Constructor de empleado
 	 * @author cesar
 	 * @param codEmple
 	 * @param nombre
@@ -30,7 +30,7 @@ public class Empleado {
 	 * @param fecha
 	 */
 	public Empleado(String codEmple, String nombre, String apellidos, String dni, String telefono, String correo,
-			String clave, String codNomina, String funcion, String descipcionPuesto, GregorianCalendar fecha) {
+			String clave, String codNomina, String funcion, String descipcionPuesto, LocalDate fecha) {
 		super();
 		this.codEmple = codEmple;
 		this.nombre = nombre;
@@ -144,7 +144,7 @@ public class Empleado {
 	 * @author cesar
 	 * @return the fecha
 	 */
-	public GregorianCalendar getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 
@@ -232,7 +232,7 @@ public class Empleado {
 	 * @author cesar
 	 * @param fecha the fecha to set
 	 */
-	public void setFecha(GregorianCalendar fecha) {
+	public void setFecha(LocalDate fecha) {
 		this.fecha = fecha;
 	}
 

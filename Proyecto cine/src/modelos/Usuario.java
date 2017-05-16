@@ -1,7 +1,7 @@
 package modelos;
 
 /**
- * 
+ * Clase para lo refente al objeto usuario del cine
  * @author cesar
  *
  */
@@ -12,7 +12,7 @@ public class Usuario {
 
 	
 	/**
-	 * 
+	 * Constructor para Usuario
 	 * @author cesar
 	 * @param codUsuario
 	 * @param correo

@@ -1,6 +1,7 @@
 package bbdd;
 
 import java.sql.*;
+
 import modelos.*;
 
 /**
@@ -101,6 +102,32 @@ public class BD_Empleado extends BD_Conector {
 				
 	
 	
+	}
+	/**
+	 * Funcion que nos cuenta el numero de empleados que tenemos para así poder generar el codEmple
+	 * @author cesar
+	 * @return
+	 */
+	public int contadorEmpleados(){
+		
+		String consulta = "SELECT COUNT(codEmple) FROM empleado";
+		int numero=0;
+		
+		try{
+			String t="";
+			this.abrir();
+			s=c.createStatement();
+			reg=s.executeQuery(consulta);
+			if ( reg.next())							
+				numero= reg.getInt(1); //cogemos el codigo del cliente para devolverle							
+			s.close();
+			this.cerrar();
+			return numero;
+		}
+		catch ( SQLException e){
+	
+			return -1;			
+		}	
 	}
 	
 }

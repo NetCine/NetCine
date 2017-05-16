@@ -4,7 +4,7 @@ import java.time.*;
 import java.util.*;
 
 /**
- * 
+ * Clase para lo refente al objeto cliente  del cine
  * @author cesar
  *
  */
