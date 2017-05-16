@@ -14,6 +14,30 @@ public class BD_Pelicula extends BD_Conector {
 	}
 
 	
+	/**
+	 * Metodo que borra una pelicula
+	 * @author cesar
+	 * @param codigoPelicula
+	 * @return
+	 */
+	public int borrarPelicula(String codigoPelicula){
+		
+		String consulta = "DELETE FROM pelicula WHERE codpelicula='" + codigoPelicula + "'";	
+		
+		try{
+			this.abrir();
+			s=c.createStatement();
+			int filas=s.executeUpdate(consulta);	
+			s.close();
+			this.cerrar();
+			return filas;
+			
+		}
+		catch ( SQLException e){
+			this.cerrar();
+			return -1;
+			}
+	}
 	
 	/**
 	 * Metodo para añadir una pelicula nueva

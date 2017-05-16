@@ -508,6 +508,52 @@ public class main {
 												System.out.println("\nLa sesion ha sido añadida");
 											else
 												System.out.println("\n-- ERROR, la sesion no se ha podido añadir");
+										} // Fin opcion 1
+										
+										if(seleccionOpcionCuatro==2){// Añadir sesion para una pelicula que ya tenemos
+											sc.nextLine();// Limpieza de buffer
+											System.out.println("\n-- Vamos a añadir una sesion");
+											System.out.print("\nIntroduce codigo de la pelicula para la que va a ser esta nueva sesion: ");
+											String codigoPeliculaSesion=sc.nextLine();
+											System.out.print("\nIntroduce numero de la sala: ");
+											int numeroSala=sc.nextInt();
+											System.out.print("\nIntroduce dia de la sala: ");
+											int diaSala=sc.nextInt();
+											System.out.print("\nIntroduce mes de la sala: ");
+											int mesSala=sc.nextInt();
+											System.out.print("\nIntroduce anyo de la sala: ");
+											int anyoSala=sc.nextInt();
+											// creamos la fecha
+											LocalDate fechaSala=LocalDate.of(anyoSala, mesSala, diaSala);
+											// creamos codigo sesion nueva
+											String codigoSesionNueva = crearCodigoSesion(bd6);
+											// Creamos la sesion
+											Sesion ss= new Sesion(codigoSesionNueva,codigoPeliculaSesion,numeroSala,fechaSala);
+											// metemos esta nueva sesion en bbdd
+											if(bd6.añadirSesion(ss)!=false)
+												System.out.println("\nLa sesion ha sido añadida");
+											else
+												System.out.println("\n-- ERROR, la sesion no se ha podido añadir");											
+												
+										}// Fin opcion 2
+										
+										if(seleccionOpcionCuatro==3){ // Eliminar pelicula y su sesion
+											sc.nextLine();
+											System.out.println("\n-- Vamos a borrar la pelicula y sus sesiones");
+											System.out.print("\nIntroduce codigo de pelicula: ");
+											String codigoPeliculaBorrar=sc.nextLine();
+											
+											// borramos la pelicula
+											if(bd5.borrarPelicula(codigoPeliculaBorrar)!=-1)
+												System.out.println("\nLa pelicula con codigo "+codigoPeliculaBorrar+" ha sido borrada");
+											else
+												System.out.println("\nLa pelicula con codigo "+codigoPeliculaBorrar+" no ha podido ser borrada");
+											// borrramos las sesiones
+											if(bd6.borrarSesiones(codigoPeliculaBorrar)!=-1)
+												System.out.println("\nLas sesiones de la pelicula con codigo "+codigoPeliculaBorrar+" ha sido borrada");
+											else
+												System.out.println("\nLas sesiones de la pelicula con codigo "+codigoPeliculaBorrar+" no han podido ser borradas");											
+											
 										}
 										
 										if(seleccionOpcionCuatro==4)
@@ -534,7 +580,7 @@ public class main {
 										}
 										else
 											System.out.println("--- Actualmente no tenemos empleados en el cine");
-									}
+									} // Fin opcion 5
 									
 									
 									
@@ -600,7 +646,7 @@ public class main {
 										else
 											System.out.print("\n-- Ese cliente no aparece en los registrados en NetCine");									
 									
-									}
+									} // Fin opcion 6
 									
 									
 									
@@ -615,7 +661,7 @@ public class main {
 										
 										System.out.print("\n--- ERROR, OPCION NO VALIDA\n");
 										
-									}
+									} 
 								
 								
 								}while(opcionUsuario>9); // Control de errores para que introduzca el jefe de empleado una opcion válida

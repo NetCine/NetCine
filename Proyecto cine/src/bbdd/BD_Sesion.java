@@ -13,6 +13,31 @@ public class BD_Sesion extends BD_Conector {
 		super (file);
 	}
 
+	/**
+	 * Metodo que borra todas las sesiones de una pelicula 
+	 * @author cesar
+	 * @param codigoPelicula
+	 * @return
+	 */
+	public int borrarSesiones(String codigoPelicula){
+		
+		String consulta = "DELETE FROM sesion WHERE codpelicula='" +  codigoPelicula + "'";	
+		
+		try{
+			this.abrir();
+			s=c.createStatement();
+			int filas=s.executeUpdate(consulta);	
+			s.close();
+			this.cerrar();
+			return filas;
+			
+		}
+		catch ( SQLException e){
+			this.cerrar();
+			return -1;
+			}
+	}
+	
 	
 	/**
 	 * Metodo para añadir una nueva sesion
@@ -20,6 +45,7 @@ public class BD_Sesion extends BD_Conector {
 	 * @param pl
 	 * @return
 	 */
+	
 	public  boolean añadirSesion(Sesion ss){
 		
 		String consulta = "INSERT INTO pelicula VALUES('" + ss.getCodSesion() + "','"  + ss.getNumeroSala() + "','" + ss.getHora() + "','" + ss.getNumeroButacasTotal() + "','" + ss.getCodPelicula() + "')";
