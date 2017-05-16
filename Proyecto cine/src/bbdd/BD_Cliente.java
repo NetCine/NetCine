@@ -135,5 +135,40 @@ public class BD_Cliente extends BD_Conector {
 		}	
 	}	
 	
+	/**
+	 * Funcion que pasa el cliente de cliente normal a especial o al revés.
+	 * @author cesar
+	 * @param codigoCliente
+	 * @param codigoNuevo
+	 * @return
+	 */
+	public int CambioTipoCliente(String codigoCliente, String codigoNuevo){
+		
+		int descuento;
+		
+		if(codigoCliente.indexOf("CE")!=-1) // Sera de tipo cliente especial y pasara a normal
+			descuento = 0;
+		else // sera de tipo normal y pasara a especial
+			descuento = 30; // El descuento para un cliente especial es del 30%
+		
+		String consulta = "UPDATE cliente SET codcliente='" + codigoNuevo +"' decuento='" + descuento + "' WHERE codcliente='" + codigoCliente +"'";
+		int numero=0;
+		
+		try{
+			String t="";
+			this.abrir();
+			s=c.createStatement();
+			reg=s.executeQuery(consulta);
+			if ( reg.next())							
+				numero= reg.getInt(1); //cogemos el codigo del cliente para devolverle							
+			s.close();
+			this.cerrar();
+			return numero;
+		}
+		catch ( SQLException e){
+	
+			return -1;			
+		}	
+	}
 	
 }

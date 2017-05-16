@@ -448,6 +448,8 @@ public class main {
 											System.out.println("--- No se ha podido borrar la nomina de este empleado");
 											
 										}
+									
+									
 										
 										
 										
@@ -471,7 +473,69 @@ public class main {
 									
 									
 									
+									if(opcionUsuario==6){ // Modificar el tipo de algún usuario registrado
+										
+										String nombreClienteCambio, apellidosClienteCambio, dniClienteCambio;
+										
+										System.out.println("\n-- Vamos a cambiar el tipo de cliente de especial a normal o de normal a especial");
+										
+										System.out.print("\nIntroduce nombre del cliente que vamos a cambiar: ");
+										sc.nextLine(); // Limpiamos buffer
+										nombreClienteCambio=sc.nextLine();
+										System.out.print("\nIntroduce apellidos del cliente que vamos a cambiar: ");
+										apellidosClienteCambio=sc.nextLine();
+										System.out.print("\nIntroduce dni del cliente que vamos a cambiar: ");
+										dniClienteCambio=sc.nextLine();
+										// construimos el cliente para buscarle y saber de que tipo es: 
+										Cliente clienteBusqueda = new Cliente(nombreClienteCambio, apellidosClienteCambio, dniClienteCambio);
+										
+										String codigoClienteCambio=bd.buscarCliente(clienteBusqueda); // Recogemos el codigo del cliente que vamos a cambiar
+										
+										if(codigoClienteCambio!=null)
+										
+											if(codigoClienteCambio.indexOf("CE")!=-1){ // El cliente es especial
+												System.out.println("\nEl cliente es especial, vamos a pasarle a normal\n");
+												
+												String codigoNuevoClienteNormal=crearCodigoClienteNormal(bd); // Generamos el nuevo codigo normal.
+												
+												if(bd.CambioTipoCliente(codigoClienteCambio, codigoNuevoClienteNormal)!=-1)
+													System.out.println("\nEmpleado con codigo "+ codigoClienteCambio+ " ha sido degradado de especial a normal");
+												else
+													System.out.println("\n-- ERROR, el cliente no existe.");
+												
+												// Debemos realizar el cambio tambien en la tabla usuario
+												
+												if(bd2.CambioTipoUsuario(codigoClienteCambio, codigoNuevoClienteNormal)!=-1)
+													System.out.println("\nEl cambio se realiza correctamente tambien en la tabla usuario");
+												else
+													System.out.println("\nEl cambio no se ha podido hacer en la tabla usuario");
+												
+												
+											}
+										
+											else{ // El cliente es normal 
+												System.out.println("\nEl cliente es normal, vamos a pasarle a especial\n");
+												
+												String codigoNuevoClienteEspecial=crearCodigoClienteEspecial(bd); // Generamos el nuevo codigo especial.
+											
+												if(bd.CambioTipoCliente(codigoClienteCambio, codigoNuevoClienteEspecial)!=-1)
+													System.out.println("\nEmpleado con codigo "+ codigoClienteCambio+ " ha sido ascendido de especial a normal");
+												else
+													System.out.println("\n-- ERROR, el cliente no existe.");
+											
+												// Debemos realizar el cambio tambien en la tabla usuario
+												
+												if(bd2.CambioTipoUsuario(codigoClienteCambio, codigoNuevoClienteEspecial)!=-1)
+													System.out.println("\nEl cambio se realiza correctamente tambien en la tabla usuario");
+												else
+													System.out.println("\nEl cambio no se ha podido hacer en la tabla usuario");
+												
+											}										
+										
+										else
+											System.out.print("\n-- Ese cliente no aparece en los registrados en NetCine");									
 									
+									}
 									
 									
 									

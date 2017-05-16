@@ -1,6 +1,7 @@
 package bbdd;
 
 import java.sql.*;
+
 import modelos.*;
 
 /**
@@ -128,5 +129,34 @@ public class BD_Usuario extends BD_Conector {
 			
 		}
 	
+	}
+	
+	/**
+	 * Funcion para cambiar el codigo del cliente en la tabla usuario y asi al conectarse mostrar el menu correcto
+	 * @author cesar
+	 * @param codigoCliente
+	 * @param codigoNuevo
+	 * @return
+	 */
+	public int CambioTipoUsuario(String codigoCliente, String codigoNuevo){
+		
+		String consulta = "UPDATE cliente SET codcliente='" + codigoNuevo + "' WHERE codcliente='" + codigoCliente +"'";
+		int numero=0;
+		
+		try{
+			String t="";
+			this.abrir();
+			s=c.createStatement();
+			reg=s.executeQuery(consulta);
+			if ( reg.next())							
+				numero= reg.getInt(1); //cogemos el codigo del cliente para devolverle							
+			s.close();
+			this.cerrar();
+			return numero;
+		}
+		catch ( SQLException e){
+	
+			return -1;			
+		}	
 	}
 }
