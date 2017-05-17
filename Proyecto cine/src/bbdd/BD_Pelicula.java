@@ -1,6 +1,7 @@
 package bbdd;
 
 import java.sql.*;
+import java.util.Vector;
 
 import modelos.*;
 
@@ -88,7 +89,29 @@ public class BD_Pelicula extends BD_Conector {
 	
 			return -1;			
 		}	
-	}	
-	
+	}
+	/**
+	 * Funcion que Devuelve la cartelera entera
+	 * @author Javier
+	 * @return
+	 */	
+	public  Vector<Pelicula> listadoPeliculas(){
+		String cadenaSQL="SELECT * FROM pelicula";
+		Vector<Pelicula> listaPelis=new Vector<Pelicula>();
+		try{
+			this.abrir();
+			s=c.createStatement();
+			reg=s.executeQuery(cadenaSQL);
+			while ( reg.next()){
+				listaPelis.add(new Pelicula(reg.getString("nombre"),reg.getString("codpelicula")));
+			}
+			s.close();
+			this.cerrar();
+			return listaPelis;
+		}
+		catch ( SQLException e){		
+			return null;			
+		}
+	}
 	
 }

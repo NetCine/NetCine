@@ -90,5 +90,72 @@ public class BD_Sesion extends BD_Conector {
 			return -1;			
 		}	
 	}
+	/**
+	 * Metodo para Sacar el codigo de sesion una vez introducido el codigo de pelicula (REALIZAR COMPRAS)
+	 * @author Javier
+	 * @return
+	 */
+	public String GetterCodSesion(String CodPel){
+		
+		String consulta = "SELECT codsesion FROM sesion WHERE '"+CodPel+"'= codpelicula";
+		String cod="";
+		try{
+			this.abrir();
+			s=c.createStatement();
+			reg=s.executeQuery(consulta);
+			if ( reg.next())							
+				cod= reg.getString(1);						
+			s.close();
+			this.cerrar();
+			return cod;
+		}
+		catch ( SQLException e){
 	
+			return null;			
+		}	
+	}
+	/**
+	 * Metodo para Sacar la cantidad de butacas que quedan en la sesion.
+	 * @author Javier
+	 * @return
+	 */
+	public int NumeroButacasRestantes(String CodSesion){
+		
+		String consulta = "SELECT numbutacastotal FROM sesion WHERE '"+CodSesion+"'= codsesion";
+		int cod=0;
+		try{
+			this.abrir();
+			s=c.createStatement();
+			reg=s.executeQuery(consulta);
+			if ( reg.next())							
+				cod= reg.getInt(1);						
+			s.close();
+			this.cerrar();
+			return cod;
+		}
+		catch ( SQLException e){
+	
+			return -1;			
+		}	
+	}
+	/**
+	 * Metodo para restar las butacas una vez se ha comprobado que la compra es valida
+	 * @author Javier
+	 * @return
+	 */
+	public int RestaButacas(int buta){
+		String consulta = "UPDATE sesion WHERE numbutacastotal - '"+buta+"'";
+		try{
+			this.abrir();
+			s=c.createStatement();
+			reg=s.executeQuery(consulta);				
+			s.close();
+			this.cerrar();
+			return 1;
+		}
+		catch ( SQLException e){
+	
+			return -1;			
+		}	
+	}
 }
