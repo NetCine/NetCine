@@ -726,13 +726,16 @@ public class main {
 										
 										else{ // Escribimos en el fichero Nominas.txt
 											
-											String cabecera="DNI\t\t    CANTIDAD(euros)";
-											System.out.println("\n -- Se escribe la informacion en el fichero Nominas.txt");
-											escribirNominas("Nominas generadas el dia: "+LocalDate.now());
-											escribirNominas(cabecera);
+											String cabecera="DNI\t\t    CANTIDAD(euros)";											
+											String cadenaNominas="Nominas generadas el dia: "+LocalDate.now()+"\n\n"+cabecera+"\n";
 											for (int i=0;i<empleadosSalario.size();i++)
-												escribirNominas(empleadosSalario.get(i));
+												cadenaNominas=(cadenaNominas+"\n"+empleadosSalario.get(i));
+											
+											escribirNominas(cadenaNominas); // Escribimos la cadena completa en el fichero Nominas
+											System.out.println("\n -- Se escribe la informacion en el fichero Nominas.txt");
 										}
+										
+										
 										
 									} // Fin opcion 8
 									
@@ -806,6 +809,7 @@ public class main {
 	            
 	            writer.write(cadena); // Copiamos la cadena con correco clave y fecha de conexion que hemos generado antes
 	            //Escribimos nueva línea para separarlas
+	            
 	            writer.newLine();
 	            
 	            writer.close();
