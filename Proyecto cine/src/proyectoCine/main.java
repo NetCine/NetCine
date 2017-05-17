@@ -377,8 +377,7 @@ public class main {
 										System.out.print("Introduce correo del nuevo empleado: ");
 										correoEmple=sc.nextLine();
 										System.out.print("Introduce clave de acceso del nuevo empleado: ");
-										claveEmple=sc.nextLine();
-										System.out.print("Introduce jornada del nuevo empleado: ");
+										claveEmple=sc.nextLine();										
 										fecha=LocalDate.now(); // Metemos la fecha en la que se le da de alta
 										System.out.print("Introduce funcion del nuevo empleado: ");
 										funcion=sc.nextLine();
@@ -762,7 +761,7 @@ public class main {
 							
 							System.out.println("\n-- SE HA CONECTADO COMO EMPLEADO, BIENVENIDO --");
 							System.out.println("\nElija una opcion:");
-							System.out.println("1.- Consultar cual es mi jornada de trabajo");
+							System.out.println("1.- Ver fecha de inicio en el trabajo"); // consulta que nos saque el campo jornada de empleado
 							System.out.println("2.- Añadir peticion nueva");
 							System.out.println("3.- Ver peticiones aceptadas");
 							System.out.println("4.- Desconectarse");
