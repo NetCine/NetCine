@@ -529,13 +529,13 @@ public class main {
 											System.out.println("2.- Añadir sesion para una pelicula que ya tenemos");
 											System.out.println("3.- Eliminar pelicula y su sesion");
 											System.out.println("4.- Salir");
-											System.out.println("--- Opcion: ");
+											System.out.print("--- Opcion: ");
 											seleccionOpcionCuatro=sc.nextInt();
 											
 											if(seleccionOpcionCuatro>4)
 												System.out.println("--- Opcion no valida");
 											
-										}while (seleccionOpcionCuatro>4);
+										}while (seleccionOpcionCuatro>4);										
 										
 										if(seleccionOpcionCuatro==1){ // Añadir pelicula y sesion
 											System.out.println("\n-- Vamos a añadir pelicula y sesion");
@@ -792,13 +792,16 @@ public class main {
 										
 										else{ // Escribimos en el fichero Nominas.txt
 											
-											String cabecera="DNI\t\t    CANTIDAD(euros)";
-											System.out.println("\n -- Se escribe la informacion en el fichero Nominas.txt");
-											escribirNominas("Nominas generadas el dia: "+LocalDate.now());
-											escribirNominas(cabecera);
+											String cabecera="DNI\t\t    CANTIDAD(euros)";											
+											String cadenaNominas="Nominas generadas el dia: "+LocalDate.now()+"\n\n"+cabecera+"\n";
 											for (int i=0;i<empleadosSalario.size();i++)
-												escribirNominas(empleadosSalario.get(i));
+												cadenaNominas=(cadenaNominas+"\n"+empleadosSalario.get(i));
+											
+											escribirNominas(cadenaNominas); // Escribimos la cadena completa en el fichero Nominas
+											System.out.println("\n -- Se escribe la informacion en el fichero Nominas.txt");
 										}
+										
+										
 										
 									} // Fin opcion 8
 									
@@ -857,26 +860,30 @@ public class main {
 	 * @author cesar
 	 * @param cadena
 	 */
-	public static void escribirNominas(String cadena) {			
+	public static void escribirNominas(String cadena) {				
 		
         Path file= Paths.get("Nominas.txt");
         Charset charset = Charset.forName("UTF-8");
         //Creamos un BufferedWriter de java.io de forma eficiente utilizando Files de java.nio
-        try (BufferedWriter writer = Files.newBufferedWriter(file, charset, APPEND)) {
-
-            Scanner sc=new Scanner(System.in);            
-
-            writer.newLine(); // Metemos un salto de linea
-            
-            writer.write(cadena); // Copiamos la cadena con correco clave y fecha de conexion que hemos generado antes
-            //Escribimos nueva línea para separarlas
-            writer.newLine();
-            
-            writer.close();
-            
-        } catch (IOException x) {
-            System.err.format("IOException: %s%n", x);
-        }
+        
+      
+	        try (BufferedWriter writer = Files.newBufferedWriter(file, charset, CREATE)) {
+	
+	            Scanner sc=new Scanner(System.in);            
+	
+	            writer.newLine(); // Metemos un salto de linea
+	            
+	            writer.write(cadena); // Copiamos la cadena con correco clave y fecha de conexion que hemos generado antes
+	            //Escribimos nueva línea para separarlas
+	            
+	            writer.newLine();
+	            
+	            writer.close();
+	            
+	        } catch (IOException x) {
+	            System.err.format("IOException: %s%n", x);
+	        }
+        
 	
 	}	
 	
@@ -888,23 +895,29 @@ public class main {
 	
         Path file= Paths.get("logConexiones.txt");
         Charset charset = Charset.forName("UTF-8");
-        //Creamos un BufferedWriter de java.io de forma eficiente utilizando Files de java.nio
-        try (BufferedWriter writer = Files.newBufferedWriter(file, charset,APPEND)) {
-
-            Scanner sc=new Scanner(System.in);            
-
-            writer.newLine(); // Metemos un salto de linea
-            
-            writer.write(cadena); // Copiamos la cadena con correco clave y fecha de conexion que hemos generado antes
-            //Escribimos nueva línea para separarlas
-            writer.newLine();
-            
-            writer.close();
-            
-        } catch (IOException x) {
-            System.err.format("IOException: %s%n", x);
-        }
+        
+        if (!Files.exists(file))
+            System.out.println("\n-- ERROR el fichero donde debemos escribir (logConexiones.txt) no existe\n");
+        
+        else{
+        	
+	        //Creamos un BufferedWriter de java.io de forma eficiente utilizando Files de java.nio
+	        try (BufferedWriter writer = Files.newBufferedWriter(file, charset,APPEND)) {
 	
+	            Scanner sc=new Scanner(System.in);            
+	
+	            writer.newLine(); // Metemos un salto de linea
+	            
+	            writer.write(cadena); // Copiamos la cadena con correco clave y fecha de conexion que hemos generado antes
+	            //Escribimos nueva línea para separarlas
+	            writer.newLine();
+	            
+	            writer.close();
+	            
+	        } catch (IOException x) {
+	            System.err.format("IOException: %s%n", x);
+	        }
+        }
 	}	
 	
 	/**

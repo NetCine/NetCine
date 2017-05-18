@@ -152,18 +152,17 @@ public class BD_Cliente extends BD_Conector {
 			descuento = 30; // El descuento para un cliente especial es del 30%
 		
 		String consulta = "UPDATE cliente SET codcliente='" + codigoNuevo +"' decuento='" + descuento + "' WHERE codcliente='" + codigoCliente +"'";
-		int numero=0;
 		
 		try{
 			String t="";
 			this.abrir();
+			
 			s=c.createStatement();
-			reg=s.executeQuery(consulta);
-			if ( reg.next())							
-				numero= reg.getInt(1); //cogemos el codigo del cliente para devolverle							
+			int n=s.executeUpdate(consulta);
+			
 			s.close();
 			this.cerrar();
-			return numero;
+			return n;
 		}
 		catch ( SQLException e){
 	
