@@ -288,11 +288,17 @@ public class main {
 							if (opcionUsuario==3){
 								int ButTot=0;//Cantidad de butacas que quedan libre para luego poder validar si se podra realizar la compra o no. **
 								int Butacas=0;
+								Compra Com;
 								String CodCompra=crearCodigoCompra(bd8);
 								Vector <Pelicula> listado=bd5.listadoPeliculas();
+								System.out.println("|------------------------------------------------|");
+								System.out.println("|---------------------TAQUILLA-------------------|");
+								System.out.println("|------------------------------------------------|");
 								for (int i=0;i<listado.size();i++){									
 									System.out.println(listado.get(i).toString());
 								}
+								System.out.println("|----------------------------------|\n");
+								sc.nextLine();
 								//Listado de todas las peliculas para poder ver el codigo de la pelicula que quieres ver.
 								System.out.println("Introduzca el cod de la pelicula que quieres ver");
 								String codpel=sc.nextLine();
@@ -300,12 +306,40 @@ public class main {
 								ButTot=bd6.NumeroButacasRestantes(codSesion); //**
 								System.out.println("El numero de butacas restantes es de: "+ButTot+". Introduzca el numero de entradas que quiere comprar");
 								Butacas=sc.nextInt();
+								
 								if (Butacas>ButTot){
-									System.out.println("No hay suificientes butacas. ERROR!");
-									break;
+									System.out.println("No hay suficientes butacas. ERROR!");
 								}
 								else{
-									
+									int ComprRestaButa=bd6.RestaButacas(Butacas,codSesion);
+									if (ComprRestaButa==1){
+										int ComprSumaEntradas=bd5.SumaPelis(Butacas,codpel);
+										if (ComprSumaEntradas==1){
+											if(codigo.indexOf("CE")!=-1){ //If para poder realizar la compra con el descuento en caso de que el usuario sea especial.
+												double precio=Butacas*10;
+												precio=precio-(precio*0.3);
+												Com = (new Compra(CodCompra,resultadoBusqueda,codSesion,Butacas,precio)); // Generamos la compra
+												if(bd8.añadirCompra(Com))
+													System.out.println("Compra Añadida");
+												else
+													System.out.println("No se ha podido realizar la compra de entradas ERROR!");
+											}
+											else{ //Se realiza la compra para los demas usuarios (SIN DESCUENTO)
+												double precio=Butacas*10;
+												Com = (new Compra(CodCompra,resultadoBusqueda,codSesion,Butacas,precio)); // Generamos la compra
+												if(bd8.añadirCompra(Com))
+													System.out.println("Compra Añadida");
+												else
+													System.out.println("No se ha podido realizar la compra de entradas ERROR!");
+											}
+										}
+										else{
+											System.out.println("ERROR, no se han podido comprar las entradas 2");
+										}
+									}
+									else{
+									System.out.println("ERROR, no se han podido comprar las entradas 1");
+									}
 								}
 							}
 							//Fin opcion 3
@@ -1059,7 +1093,7 @@ public class main {
 	public static String crearCodigoCompra(BD_Compra bd){
 		
 		String codigo="";
-		int numeroCodigo = bd.contadorClientes();
+		int numeroCodigo = bd.contadorCompras();
 		numeroCodigo++;
 
 		// El codigo para un cliente especial se genera con las siglas PL mas los ceros que necesite segun los usuarios que ya haya

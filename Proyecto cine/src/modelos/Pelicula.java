@@ -71,8 +71,13 @@ public class Pelicula {
 	public void setCodigoPelicula(String codigoPelicula) {
 		this.codigoPelicula = codigoPelicula;
 	}
-	
-	
-	
-	
+	/**
+	 * @author Javier
+	 * @param String Pelicula
+	 */
+	@Override
+	public String toString() {
+		return "Pelicula [nombrePelicula=" + nombrePelicula
+				+ ", codigoPelicula=" + codigoPelicula + "]";
+	}
 }

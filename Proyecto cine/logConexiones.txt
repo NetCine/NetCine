@@ -70,3 +70,25 @@ ejemplo@ejemplo.com	a1234567	2017-05-16
 ejemplo@ejemplo.com	a1234567	2017-05-16
 
 ejemplo@ejemplo.com	a1234567	2017-05-16
+
+Cliente@especial.com	a1234567	2017-05-17
+
+Cliente@especial.com	a1234567	2017-05-17
+
+Cliente@especial.com	a1234567	2017-05-17
+
+Cliente@especial.com	a1234567	2017-05-17
+
+Cliente@especial.com	a1234567	2017-05-18
+
+Cliente@especial.com	a1234567	2017-05-18
+
+Cliente@especial.com	a1234567	2017-05-18
+
+Cliente@especial.com	a1234567	2017-05-18
+
+Cliente@especial.com	a1234567	2017-05-18
+
+Cliente@especial.com	a1234567	2017-05-18
+
+Cliente@especial.com	a1234567	2017-05-18

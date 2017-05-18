@@ -143,18 +143,17 @@ public class BD_Sesion extends BD_Conector {
 	 * @author Javier
 	 * @return
 	 */
-	public int RestaButacas(int buta){
-		String consulta = "UPDATE sesion WHERE numbutacastotal - '"+buta+"'";
+	public int RestaButacas(int buta, String CodSesion){
+		String consulta = "UPDATE sesion SET numButacasTotal = numButacasTotal - "+buta+" WHERE codsesion = '"+CodSesion+"'";
 		try{
 			this.abrir();
 			s=c.createStatement();
-			reg=s.executeQuery(consulta);				
+			int n=s.executeUpdate(consulta);				
 			s.close();
 			this.cerrar();
-			return 1;
+			return n;
 		}
 		catch ( SQLException e){
-	
 			return -1;			
 		}	
 	}

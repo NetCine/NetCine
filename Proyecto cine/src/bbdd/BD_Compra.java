@@ -22,7 +22,7 @@ public class BD_Compra extends BD_Conector {
 	 * @param Compr
 	 * @return
 	 */
-	public  boolean añadirNomina(Compra Compr){
+	public  boolean añadirCompra(Compra Compr){
 		
 		String consulta = "INSERT INTO compras VALUES('" + Compr.getCodCompra() + "','" +Compr.getCodCliente()+"','"  + Compr.getCodSesion() +"','"  +Compr.getNumEntradas()+"','"  + Compr.getPrecioEntradas() +  "')";
 		
@@ -39,7 +39,12 @@ public class BD_Compra extends BD_Conector {
 			return false;
 		}
 	}
-public int contadorClientes(){
+	/**
+	 * Metodo para calcular el codigo de compra
+	 * @author Javier
+	 * @return
+	 */
+	public int contadorCompras(){
 		
 		String consulta = "SELECT COUNT(CodCompra) FROM compras";
 		int numero=0;
@@ -49,7 +54,7 @@ public int contadorClientes(){
 			s=c.createStatement();
 			reg=s.executeQuery(consulta);
 			if ( reg.next())							
-				numero= reg.getInt(1); //cogemos el codigo del cliente para devolverle							
+				numero= reg.getInt(1);						
 			s.close();
 			this.cerrar();
 			return numero;

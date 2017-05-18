@@ -113,5 +113,19 @@ public class BD_Pelicula extends BD_Conector {
 			return null;			
 		}
 	}
+	public int SumaPelis(int entradas, String codPelicula){
+		String consulta = "UPDATE pelicula SET totalvendidas = totalvendidas + '"+entradas+"' WHERE codpelicula = '"+codPelicula+"'";
+		try{
+			this.abrir();
+			s=c.createStatement();
+			int n=s.executeUpdate(consulta);				
+			s.close();
+			this.cerrar();
+			return n;
+		}
+		catch ( SQLException e){
 	
+			return -1;			
+		}	
+	}
 }
