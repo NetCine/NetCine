@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 
   <entry key="dbms">mysql</entry>
   <entry key="driver">com.mysql.jdbc.Driver</entry>
   <entry key="database_name">bbddcine</entry>
-  <entry key="user_name">admin</entry>
+  <entry key="user_name">JavierRoot</entry>
   <entry key="password">a1234567</entry>
   <entry key="server_name">localhost</entry>
   <entry key="port_number">3306</entry>

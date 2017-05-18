@@ -41,6 +41,7 @@ public class main {
 		BD_Pelicula bd5 = new BD_Pelicula("mysql-properties.xml");
 		BD_Sesion bd6 = new BD_Sesion("mysql-properties.xml");
 		BD_Peticion bd7 = new BD_Peticion ("mysql-properties.xml");
+		BD_Compra bd8 = new BD_Compra ("mysql-properties.xml");
 		
 		int opcion1=0, opcionUsuario, opcionCupon=0;
 		
@@ -269,7 +270,8 @@ public class main {
 								System.out.println("\n-- SE HA CONECTADO COMO USUARIO CLIENTE NORMAL, BIENVENIDO --");
 							if(codigo.indexOf("CE")!=-1)
 								System.out.println("\n-- SE HA CONECTADO COMO USUARIO CLIENTE ESPECIAL, BIENVENIDO --");
-							
+							do{
+							try{
 							System.out.println("\nElija una opcion:");							
 							System.out.println("1.- Editar sus datos");
 							System.out.println("2.- Editar compra");
@@ -279,11 +281,75 @@ public class main {
 							System.out.print("--- Opcion: ");
 							opcionUsuario=sc.nextInt();
 							
+							}catch(InputMismatchException e){
+							opcionUsuario=5; // Le asigno el 5 para que entre a mostrar el mensaje de error
+							sc.nextLine(); // Limpieza de buffer
+							}
+							if (opcionUsuario==3){
+								int ButTot=0;//Cantidad de butacas que quedan libre para luego poder validar si se podra realizar la compra o no. **
+								int Butacas=0;
+								Compra Com;
+								String CodCompra=crearCodigoCompra(bd8);
+								Vector <Pelicula> listado=bd5.listadoPeliculas();
+								System.out.println("|------------------------------------------------|");
+								System.out.println("|---------------------TAQUILLA-------------------|");
+								System.out.println("|------------------------------------------------|");
+								for (int i=0;i<listado.size();i++){									
+									System.out.println(listado.get(i).toString());
+								}
+								System.out.println("|----------------------------------|\n");
+								sc.nextLine();
+								//Listado de todas las peliculas para poder ver el codigo de la pelicula que quieres ver.
+								System.out.println("Introduzca el cod de la pelicula que quieres ver");
+								String codpel=sc.nextLine();
+								String codSesion=bd6.GetterCodSesion(codpel);
+								ButTot=bd6.NumeroButacasRestantes(codSesion); //**
+								System.out.println("El numero de butacas restantes es de: "+ButTot+". Introduzca el numero de entradas que quiere comprar");
+								Butacas=sc.nextInt();
+								
+								if (Butacas>ButTot){
+									System.out.println("No hay suficientes butacas. ERROR!");
+								}
+								else{
+									int ComprRestaButa=bd6.RestaButacas(Butacas,codSesion);
+									if (ComprRestaButa==1){
+										int ComprSumaEntradas=bd5.SumaPelis(Butacas,codpel);
+										if (ComprSumaEntradas==1){
+											if(codigo.indexOf("CE")!=-1){ //If para poder realizar la compra con el descuento en caso de que el usuario sea especial.
+												double precio=Butacas*10;
+												precio=precio-(precio*0.3);
+												Com = (new Compra(CodCompra,resultadoBusqueda,codSesion,Butacas,precio)); // Generamos la compra
+												if(bd8.añadirCompra(Com))
+													System.out.println("Compra Añadida");
+												else
+													System.out.println("No se ha podido realizar la compra de entradas ERROR!");
+											}
+											else{ //Se realiza la compra para los demas usuarios (SIN DESCUENTO)
+												double precio=Butacas*10;
+												Com = (new Compra(CodCompra,resultadoBusqueda,codSesion,Butacas,precio)); // Generamos la compra
+												if(bd8.añadirCompra(Com))
+													System.out.println("Compra Añadida");
+												else
+													System.out.println("No se ha podido realizar la compra de entradas ERROR!");
+											}
+										}
+										else{
+											System.out.println("ERROR, no se han podido comprar las entradas 2");
+										}
+									}
+									else{
+									System.out.println("ERROR, no se han podido comprar las entradas 1");
+									}
+								}
+							}
+							//Fin opcion 3
 							if(opcionUsuario==5)
 								System.out.print("\n--- HASTA PRONTO ---\n");
-							
+							//Fin opcion 5
+						
+						}while(opcionUsuario!=5);
 						}
-				
+						// Fin Opcion Cliente	
 						if(codigo.indexOf("JF")!=-1){
 							
 							do{
@@ -1026,6 +1092,36 @@ public class main {
 		
 		if(numeroCodigo>999)
 			codigo = "PL"+numeroCodigo;
+		
+		return codigo;
+		
+		
+	}
+	/**
+	 * Metodo que crea el codigo de las compras nuevas
+	 * @author Javier
+	 * @param bd
+	 * @return
+	 */
+	public static String crearCodigoCompra(BD_Compra bd){
+		
+		String codigo="";
+		int numeroCodigo = bd.contadorCompras();
+		numeroCodigo++;
+
+		// El codigo para un cliente especial se genera con las siglas PL mas los ceros que necesite segun los usuarios que ya haya
+		
+		if(numeroCodigo<10)
+			codigo="CA"+"000"+numeroCodigo;
+		
+		if(numeroCodigo>=10 && numeroCodigo<=99)
+			codigo = "CA"+"00"+numeroCodigo;
+		
+		if(numeroCodigo>99)
+			codigo = "CA"+"0"+numeroCodigo;
+		
+		if(numeroCodigo>999)
+			codigo = "CA"+numeroCodigo;
 		
 		return codigo;
 		
