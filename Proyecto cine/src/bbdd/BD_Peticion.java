@@ -25,7 +25,7 @@ public class BD_Peticion extends BD_Conector {
 	 */
 	public  Vector <Peticion> listaPeticionesPendientes(){
 		
-		String cadena="SELECT * from peticion WHERE revisado='" + false + "'";
+		String cadena="SELECT * from peticion WHERE revisado=" + 0 + "";
 		
 		Vector <Peticion> peticionesPendientes = new Vector <Peticion> ();
 		
@@ -53,7 +53,7 @@ public class BD_Peticion extends BD_Conector {
 	 */
 	public int ponerPeticionesComoRevisadas(){
 		
-		String consulta = "UPDATE peticion SET revisado='" + true  +"'";
+		String consulta = "UPDATE peticion SET revisado=" + 1 +"";
 		
 		try{
 			String t="";
@@ -79,7 +79,7 @@ public class BD_Peticion extends BD_Conector {
 	 */
 	public int aceptarPeticion(String codPeticion){
 		
-		String consulta = "UPDATE peticion SET estado='" + true  + "' WHERE codpeticion='" + codPeticion +"'";
+		String consulta = "UPDATE peticion SET estado=" + 1 + " WHERE codpeticion='" + codPeticion +"'";
 		
 		try{
 			String t="";

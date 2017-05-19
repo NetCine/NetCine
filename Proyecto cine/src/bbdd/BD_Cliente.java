@@ -151,10 +151,10 @@ public class BD_Cliente extends BD_Conector {
 		else // sera de tipo normal y pasara a especial
 			descuento = 30; // El descuento para un cliente especial es del 30%
 		
-		String consulta = "UPDATE cliente SET codcliente='" + codigoNuevo +"' decuento='" + descuento + "' WHERE codcliente='" + codigoCliente +"'";
+		String consulta = "UPDATE cliente SET CodCliente='" + codigoNuevo +"', descuento=" + descuento + " WHERE CodCliente='" + codigoCliente + "'";
 		
 		try{
-			String t="";
+			
 			this.abrir();
 			
 			s=c.createStatement();
@@ -165,7 +165,7 @@ public class BD_Cliente extends BD_Conector {
 			return n;
 		}
 		catch ( SQLException e){
-	
+			
 			return -1;			
 		}	
 	}

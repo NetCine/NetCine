@@ -382,17 +382,18 @@ public class main {
 									if(opcionUsuario==1){ // Opcion modificar cupones de registro
 										
 										do{
-											System.out.print("\n1.- Para quitar cupon\n2.- Para añadir nuevo cupón");
+											System.out.print("\n1.- Para añadir nuevo cupón \n2.- Para quitar cupon");
+											System.out.print("\nOpcion: ");
 											opcionCupon=sc.nextInt();
 											
-											if(opcionCupon==1){ // En caso de querer quitar un cupon
+											if(opcionCupon==1){ // En caso de querer añadir un cupon
 												System.out.print("\nInserte el nuevo cupon que quiere añadir: ");
 												sc.nextLine(); // Limpieza buffer
-												codigosPromocionales.add(sc.nextLine());
-												System.out.print("\nCupon añadido");
+												codigosPromocionales.add(sc.nextLine().toUpperCase());
+												System.out.print("\nCupon añadido\n");
 											}
 											
-											else if(opcionCupon==2){ // En caso de querer añadir un cupon
+											else if(opcionCupon==2){ // En caso de querer quitar un cupon
 												sc.nextLine(); // Limpieza de buffer
 												System.out.print("\nInserte el cupon que quiere eliminar: ");
 												String cuponEliminar=sc.nextLine();
@@ -406,7 +407,7 @@ public class main {
 													
 												}
 												if(eliminado==0) // En caso de no existir dicho cupon
-													System.out.print("\n-- El cupon "+cuponEliminar+" no se encuentra entre los validos por lo que no se puede eliminar");
+													System.out.print("\n-- El cupon "+cuponEliminar+" no se encuentra entre los validos por lo que no se puede eliminar\n");
 												
 											}
 											
@@ -488,14 +489,13 @@ public class main {
 									
 									if(opcionUsuario==3){ // Opcion para dar de baja un empleado
 										
-										sc.nextInt();// Limpieza de buffer
-										
 										String codigoEmpleadoBaja, codigoNominaBaja;
 										
 										System.out.println("\n-- Vamos a dar de baja un nuevo empleado");
 										System.out.println("\n-- Recuerde que al borrar el empleado se borra como empleado, usuario y tambien se elimina su nomina");
 										
 										System.out.print("Introduce el codigo del empleado que desea borrar: ");
+										sc.nextLine();// Limpieza de buffer
 										codigoEmpleadoBaja = sc.nextLine();
 										System.out.print("Introduce el codigo de la nomina del empleado que desea borrar: ");
 										codigoNominaBaja = sc.nextLine();
@@ -556,14 +556,14 @@ public class main {
 											System.out.println("\n-- Vamos a añadir la sesion");
 											System.out.print("\nIntroduce numero de la sala: ");
 											int numeroSala=sc.nextInt();
-											System.out.print("\nIntroduce dia de la sala: ");
-											int diaSala=sc.nextInt();
-											System.out.print("\nIntroduce mes de la sala: ");
-											int mesSala=sc.nextInt();
-											System.out.print("\nIntroduce anyo de la sala: ");
-											int anyoSala=sc.nextInt();
+											System.out.print("\nIntroduce hora de la sala: ");
+											int horaSala=sc.nextInt();
+											System.out.print("\nIntroduce min de la sala: ");
+											int minSala=sc.nextInt();
+											//System.out.print("\nIntroduce anyo de la sala: ");
+											//int anyoSala=sc.nextInt();
 											// creamos la fecha
-											LocalDate fechaSala=LocalDate.of(anyoSala, mesSala, diaSala);
+											LocalTime fechaSala=LocalTime.of(horaSala,minSala,0);
 											// creamos codigo sesion nueva
 											String codigoSesionNueva = crearCodigoSesion(bd6);
 											// creamos la sesion
@@ -583,18 +583,17 @@ public class main {
 											String codigoPeliculaSesion=sc.nextLine();
 											System.out.print("\nIntroduce numero de la sala: ");
 											int numeroSala=sc.nextInt();
-											System.out.print("\nIntroduce dia de la sala: ");
-											int diaSala=sc.nextInt();
-											System.out.print("\nIntroduce mes de la sala: ");
-											int mesSala=sc.nextInt();
-											System.out.print("\nIntroduce anyo de la sala: ");
-											int anyoSala=sc.nextInt();
+											System.out.print("\nIntroduce hora de la sala: ");
+											int horaSala=sc.nextInt();
+											System.out.print("\nIntroduce minutos de la sala: ");
+											int minSala=sc.nextInt();
+											
 											// creamos la fecha
-											LocalDate fechaSala=LocalDate.of(anyoSala, mesSala, diaSala);
+											LocalTime horaSala2=LocalTime.of(horaSala,minSala,0);
 											// creamos codigo sesion nueva
 											String codigoSesionNueva = crearCodigoSesion(bd6);
 											// Creamos la sesion
-											Sesion ss= new Sesion(codigoSesionNueva,codigoPeliculaSesion,numeroSala,fechaSala);
+											Sesion ss= new Sesion(codigoSesionNueva,codigoPeliculaSesion,numeroSala,horaSala2);
 											// metemos esta nueva sesion en bbdd
 											if(bd6.añadirSesion(ss)!=false)
 												System.out.println("\nLa sesion ha sido añadida");
@@ -651,23 +650,13 @@ public class main {
 									
 									
 									if(opcionUsuario==6){ // Modificar el tipo de algún usuario registrado
-										
-										String nombreClienteCambio, apellidosClienteCambio, dniClienteCambio;
-										
+																				
 										System.out.println("\n-- Vamos a cambiar el tipo de cliente de especial a normal o de normal a especial");
 										
-										System.out.print("\nIntroduce nombre del cliente que vamos a cambiar: ");
-										sc.nextLine(); // Limpiamos buffer
-										nombreClienteCambio=sc.nextLine();
-										System.out.print("\nIntroduce apellidos del cliente que vamos a cambiar: ");
-										apellidosClienteCambio=sc.nextLine();
-										System.out.print("\nIntroduce dni del cliente que vamos a cambiar: ");
-										dniClienteCambio=sc.nextLine();
-										// construimos el cliente para buscarle y saber de que tipo es: 
-										Cliente clienteBusqueda = new Cliente(nombreClienteCambio, apellidosClienteCambio, dniClienteCambio);
-										
-										String codigoClienteCambio=bd.buscarCliente(clienteBusqueda); // Recogemos el codigo del cliente que vamos a cambiar
-										
+										System.out.print("\nIntroduce el codigo del cliente que vamos a cambiar: ");
+										sc.nextLine(); // Limpiamos el buffer										
+										String codigoClienteCambio=sc.nextLine();
+												
 										if(codigoClienteCambio!=null)
 										
 											if(codigoClienteCambio.indexOf("CE")!=-1){ // El cliente es especial
@@ -676,7 +665,7 @@ public class main {
 												String codigoNuevoClienteNormal=crearCodigoClienteNormal(bd); // Generamos el nuevo codigo normal.
 												
 												if(bd.CambioTipoCliente(codigoClienteCambio, codigoNuevoClienteNormal)!=-1)
-													System.out.println("\nEmpleado con codigo "+ codigoClienteCambio+ " ha sido degradado de especial a normal");
+													System.out.println("-- Empleado con codigo "+ codigoClienteCambio+ " ha sido degradado de especial a normal");
 												else
 													System.out.println("\n-- ERROR, el cliente no existe.");
 												
@@ -696,7 +685,7 @@ public class main {
 												String codigoNuevoClienteEspecial=crearCodigoClienteEspecial(bd); // Generamos el nuevo codigo especial.
 											
 												if(bd.CambioTipoCliente(codigoClienteCambio, codigoNuevoClienteEspecial)!=-1)
-													System.out.println("\nEmpleado con codigo "+ codigoClienteCambio+ " ha sido ascendido de especial a normal");
+													System.out.println("-- Empleado con codigo "+ codigoClienteCambio+ " ha sido ascendido de especial a normal");
 												else
 													System.out.println("\n-- ERROR, el cliente no existe.");
 											
@@ -721,12 +710,13 @@ public class main {
 										
 										peticionesPendientesRevision=bd7.listaPeticionesPendientes();
 										
-										if(peticionesPendientesRevision!=null){ // Si tenemos peticiones por revisar
+										if(peticionesPendientesRevision.size()!=0){ // Si tenemos peticiones por revisar
 											System.out.println("\nTenemos las siguientes peticiones sin revisar: \n");	
 											for(int i=0;i<peticionesPendientesRevision.size();i++){
 												System.out.println(peticionesPendientesRevision.get(i).toString());											
 												
 											}
+										
 											// ponemos como vistas todas las peticiones ya que todas han sido vistas
 											bd7.ponerPeticionesComoRevisadas();
 											
@@ -734,7 +724,7 @@ public class main {
 											
 											try{
 												do{
-													System.out.print("\n-- 1.- Para modificar estado de peticion.\n2.- Para no modificar ninguna peticion: ");
+													System.out.print("\n1.- Para modificar estado de peticion.\n2.- Para no modificar ninguna peticion\n-- Opcion: ");
 													opcionModificarPeticion=sc.nextInt();
 													
 													if(opcionModificarPeticion==1){ // Vamos a modificar el estado de alguna peticion y por tanto ha aceptarla
@@ -745,7 +735,7 @@ public class main {
 														if(bd7.aceptarPeticion(codigoPeticionCambio)!=-1) // Pasamos a aceptada la peticion cuyo codigo nos ha dado el jefe del cine
 															System.out.print("\n-- La peticion de codigo: " + codigoPeticionCambio + " ha sido aceptada");
 														else
-															System.out.print("\n-- Esa peticion no se ha podido poner como aceptada");
+															System.out.print("\n-- Esa peticion no se ha podido poner como aceptada\n");
 														
 													}
 													else if(opcionModificarPeticion==2)
@@ -758,8 +748,7 @@ public class main {
 											}catch(InputMismatchException e){
 												System.out.println("\n-- Opcion erronea, inserte opcion valida");												
 											}
-										}
-										
+										}										
 										
 										else
 											System.out.println("\n-- No tienes peticiones pendientes de revision");
@@ -795,7 +784,7 @@ public class main {
 											String cabecera="DNI\t\t    CANTIDAD(euros)";											
 											String cadenaNominas="Nominas generadas el dia: "+LocalDate.now()+"\n\n"+cabecera+"\n";
 											for (int i=0;i<empleadosSalario.size();i++)
-												cadenaNominas=(cadenaNominas+"\n"+empleadosSalario.get(i));
+												cadenaNominas=(cadenaNominas+"\n"+empleadosSalario.get(i)+" euros");
 											
 											escribirNominas(cadenaNominas); // Escribimos la cadena completa en el fichero Nominas
 											System.out.println("\n -- Se escribe la informacion en el fichero Nominas.txt");

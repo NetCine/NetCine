@@ -140,11 +140,11 @@ public class BD_Usuario extends BD_Conector {
 	 */
 	public int CambioTipoUsuario(String codigoCliente, String codigoNuevo){
 		
-		String consulta = "UPDATE cliente SET codcliente='" + codigoNuevo + "' WHERE codcliente='" + codigoCliente +"'";
+		String consulta = "UPDATE usuario SET CodUsuario='" + codigoNuevo + "' WHERE Codusuario='" + codigoCliente +"'";
 	
 		
 		try{
-			String t="";
+			
 			this.abrir();
 			s=c.createStatement();
 			int n=s.executeUpdate(consulta);
@@ -153,7 +153,7 @@ public class BD_Usuario extends BD_Conector {
 			return n;
 		}
 		catch ( SQLException e){
-	
+			
 			return -1;			
 		}	
 	}

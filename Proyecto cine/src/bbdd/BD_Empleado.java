@@ -57,7 +57,7 @@ public class BD_Empleado extends BD_Conector {
 	 */
 	public int borrarEmpleadoPorCodigoEmple(String codigoEmpleadoBorrar){
 		
-		String consulta = "DELETE FROM empleado WHERE codemple='" +  codigoEmpleadoBorrar + "'";	
+		String consulta = "DELETE FROM empleado WHERE codemple='" + codigoEmpleadoBorrar + "'";	
 		
 		try{
 			this.abrir();

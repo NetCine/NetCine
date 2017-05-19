@@ -12,7 +12,7 @@ public class Sesion {
 	
 	private String codSesion, codPelicula;
 	private int numeroSala;
-	private LocalDate hora;
+	private LocalTime hora;
 	
 	/**
 	 * Constructor para la clase Sesion
@@ -22,7 +22,7 @@ public class Sesion {
 	 * @param numeroSala
 	 * @param hora
 	 */
-	public Sesion(String codSesion, String codPelicula, int numeroSala,	LocalDate hora) {
+	public Sesion(String codSesion, String codPelicula, int numeroSala,	LocalTime hora) {
 		super();
 		this.codSesion = codSesion;
 		this.codPelicula = codPelicula;
@@ -91,7 +91,7 @@ public class Sesion {
 	 * @author cesar
 	 * @return the hora
 	 */
-	public LocalDate getHora() {
+	public LocalTime getHora() {
 		return hora;
 	}
 
@@ -99,7 +99,7 @@ public class Sesion {
 	 * @author cesar
 	 * @param hora the hora to set
 	 */
-	public void setHora(LocalDate hora) {
+	public void setHora(LocalTime hora) {
 		this.hora = hora;
 	}
 
