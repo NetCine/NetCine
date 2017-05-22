@@ -157,4 +157,30 @@ public class BD_Usuario extends BD_Conector {
 			return -1;			
 		}	
 	}
+	/**
+	 * Funcion que recibe la nueva contraseña y la sustituye por la anterior
+	 * @author Javier
+	 * @param codigoCliente
+	 * @param contr
+	 * @return
+	 */
+	public int CambioContrasenia(String codigoCliente, String contr){
+		
+		String consulta = "UPDATE usuario SET Clave='" + contr + "' WHERE Codusuario='" + codigoCliente +"'";
+	
+		
+		try{
+			
+			this.abrir();
+			s=c.createStatement();
+			int n=s.executeUpdate(consulta);
+			s.close();
+			this.cerrar();
+			return n;
+		}
+		catch ( SQLException e){
+			
+			return -1;			
+		}	
+	}
 }

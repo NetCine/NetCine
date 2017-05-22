@@ -291,10 +291,12 @@ public class main {
 										System.out.println("¿Que campo desea modificar?");
 										System.out.println("1.- Numero de tarjeta");
 										System.out.println("2.- Telefono de contacto principal");
-										System.out.println("3.- SALIR");
+										System.out.println("3.- Cambiar contraseña");
+										System.out.println("4.- SALIR");
+										System.out.print("--- Opcion: ");
 										opcCL=sc.nextInt();
 										}catch(InputMismatchException e){
-											opcCL=4;
+											opcCL=5;
 											sc.nextLine(); // Limpieza de buffer
 										}
 									if (opcCL==1){
@@ -304,8 +306,10 @@ public class main {
 										switch(comprCambioTarj){
 											case 1:
 												System.out.println("Se ha realizado el cambio con exito");
+												break;
 											case -1:
 												System.out.println("En estos momentos no se puede realizar el cambio");
+												break;
 										}	
 									}
 									//
@@ -318,19 +322,43 @@ public class main {
 										switch(comprCambioTelf){
 										case 1:
 											System.out.println("Se ha realizado el cambio con exito");
+											break;
 										case -1:
 											System.out.println("En estos momentos no se puede realizar el cambio");
-									}
+											break;
+										}
 									}
 									//
 									//Fin opcion 2 (EDITAR NUM TELEFONO)
 									//
 									if (opcCL==3){
-										System.out.println("\n");
+										sc.nextLine();
+										int cambioContrCl=0,cambioContrUsu=0;
+										System.out.println("Introduzca la nueva contraseña para su cuenta");
+										String newContr=sc.nextLine();
+										cambioContrCl=bd.CambioContrasenia(newContr, resultadoBusqueda);
+										if(cambioContrCl!=-1){
+											cambioContrUsu=bd2.CambioContrasenia(resultadoBusqueda, newContr);
+											if(cambioContrUsu!=-1){
+												System.out.println("Cambio de contraseña realizado");
+											}
+											else{
+												System.out.println("En estos momentos no se puede realizar el cambio de contraseña");
+											}
+										}
+										else{
+											System.out.println("En estos momentos no se puede realizar el cambio de contraseña");
+										}
 									}
 									//
+									//Fin opcion 3 (EDITAR CONTRASEÑA)
+									//
 									if (opcCL==4){
-										System.out.println("ERROR!");
+										System.out.println("Saliendo...");
+									}
+									//
+									if (opcCL>4){
+										System.out.println("Opcion erronea.");
 									}
 									//
 								}while(opcCL!=3);
@@ -346,6 +374,7 @@ public class main {
 										System.out.println("1.- Modificar el numero de entradas a comprar");
 										System.out.println("2.- Modificar la pelicula que va a ver");
 										System.out.println("3.- SALIR");
+										System.out.print("--- Opcion: ");
 										opcCL=sc.nextInt();
 									}catch(InputMismatchException e){
 										opcCL=4;
@@ -376,7 +405,8 @@ public class main {
 														}
 														else{
 															double precio=entNew*10;
-															int EditarEntradasPrecio=bd8.SumaButacasyDinero(entNew, CodCompraUlt, precio); //
+															int EditarEntradasPrecio=bd8.SumaButacasyDinero(entNew, CodCompraUlt, precio);
+															System.out.println("Cambios realizados");//
 														}
 													}
 													else{
@@ -449,7 +479,7 @@ public class main {
 									//
 									//Fin opcion 3
 									//
-									if (opcCL>4){
+									if (opcCL>3){
 										System.out.println("Opcion erronea.");
 									}
 								}while(opcCL!=3);
