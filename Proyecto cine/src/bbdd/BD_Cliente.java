@@ -169,5 +169,49 @@ public class BD_Cliente extends BD_Conector {
 			return -1;			
 		}	
 	}
+	/**
+	 * Funcion que recibe el numero de tarjeta nuevo y el numero de cliente que solicita el cambio y se realiza el update actualizando los datos
+	 * @author Javier
+	 * @param numTarjeta
+	 * @param codCliente
+	 * @return
+	 */
+	public int CambioNumTarjeta(int numTarjeta, String codCliente){
+		String consulta = "UPDATE cliente SET numtarjeta = '"+numTarjeta+"' WHERE codcliente = '"+codCliente+"'";
+		try{
+			this.abrir();
+			s=c.createStatement();
+			int n=s.executeUpdate(consulta);				
+			s.close();
+			this.cerrar();
+			return n;
+		}
+		catch ( SQLException e){
+	
+			return -1;			
+		}	
+	}
+	/**
+	 * Funcion que recibe el numero de telefono nuevo y el numero de cliente que solicita el cambio y se realiza el update actualizando los datos
+	 * @author Javier
+	 * @param telf
+	 * @param codCliente
+	 * @return
+	 */
+	public int CambioTelfContacto(int telf, String codCliente){
+		String consulta = "UPDATE cliente SET numtarjeta = '"+telf+"' WHERE codcliente = '"+codCliente+"'";
+		try{
+			this.abrir();
+			s=c.createStatement();
+			int n=s.executeUpdate(consulta);				
+			s.close();
+			this.cerrar();
+			return n;
+		}
+		catch ( SQLException e){
+	
+			return -1;			
+		}	
+	}
 	
 }

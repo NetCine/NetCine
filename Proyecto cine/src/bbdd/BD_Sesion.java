@@ -48,7 +48,7 @@ public class BD_Sesion extends BD_Conector {
 	
 	public  boolean añadirSesion(Sesion ss){
 		
-		String consulta = "INSERT INTO sesion(CodSesion,NumSala,Hora,numButacasTotal,CodPelicula) VALUES('" + ss.getCodSesion() + "',"  + ss.getNumeroSala() + ",'" + ss.getHora() + "'," + ss.getNumeroButacasTotal() + ",'" + ss.getCodPelicula() + "')";
+		String consulta = "INSERT INTO pelicula VALUES('" + ss.getCodSesion() + "',"  + ss.getNumeroSala() + ",'" + ss.getHora() + "'," + ss.getNumeroButacasTotal() + ",'" + ss.getCodPelicula() + "')";
 		
 		try{
 			this.abrir();
@@ -59,7 +59,6 @@ public class BD_Sesion extends BD_Conector {
 			return true;
 		}
 		catch ( SQLException e){
-			System.out.println("error sql: "+e.getMessage()+" valor de la variable: "+consulta);
 			this.cerrar();
 			return false;
 		}
@@ -99,6 +98,30 @@ public class BD_Sesion extends BD_Conector {
 	public String GetterCodSesion(String CodPel){
 		
 		String consulta = "SELECT codsesion FROM sesion WHERE '"+CodPel+"'= codpelicula";
+		String cod="";
+		try{
+			this.abrir();
+			s=c.createStatement();
+			reg=s.executeQuery(consulta);
+			if ( reg.next())							
+				cod= reg.getString(1);						
+			s.close();
+			this.cerrar();
+			return cod;
+		}
+		catch ( SQLException e){
+	
+			return null;			
+		}	
+	}
+	/**
+	 * Metodo para Sacar el codigo de pelicula una vez introducido el codigo de sesion (EDITAR COMPRAS)
+	 * @author Javier
+	 * @return
+	 */
+	public String GetterCodPel(String CodSes){
+		
+		String consulta = "SELECT codpelicula FROM sesion WHERE '"+CodSes+"'= codsesion";
 		String cod="";
 		try{
 			this.abrir();
@@ -158,4 +181,24 @@ public class BD_Sesion extends BD_Conector {
 			return -1;			
 		}	
 	}
+	/**
+	 * Metodo para Sumar las butacas cuando se realiza algun cambio en la compra
+	 * @author Javier
+	 * @return
+	 */
+	public int SumaButacas(int buta, String CodSesion){
+		String consulta = "UPDATE sesion SET numButacasTotal = numButacasTotal + "+buta+" WHERE codsesion = '"+CodSesion+"'";
+		try{
+			this.abrir();
+			s=c.createStatement();
+			int n=s.executeUpdate(consulta);				
+			s.close();
+			this.cerrar();
+			return n;
+		}
+		catch ( SQLException e){
+			return -1;			
+		}	
+	}
+	
 }

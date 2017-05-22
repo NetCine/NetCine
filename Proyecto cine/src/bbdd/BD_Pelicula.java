@@ -113,6 +113,11 @@ public class BD_Pelicula extends BD_Conector {
 			return null;			
 		}
 	}
+	/**
+	 * Funcion que Suma el numero de butacas compradas al numero de butacas que lleva en total la pelicula
+	 * @author Javier
+	 * @return
+	 */	
 	public int SumaPelis(int entradas, String codPelicula){
 		String consulta = "UPDATE pelicula SET totalvendidas = totalvendidas + '"+entradas+"' WHERE codpelicula = '"+codPelicula+"'";
 		try{
@@ -127,5 +132,48 @@ public class BD_Pelicula extends BD_Conector {
 	
 			return -1;			
 		}	
+	}
+	/**
+	 * Funcion que resta el numero de butacas compradas al numero de butacas que lleva en total la pelicula(EDITAR COMPRA)
+	 * @author Javier
+	 * @return
+	 */	
+	public int RestaPelis(int entradas, String codPelicula){
+		String consulta = "UPDATE pelicula SET totalvendidas = totalvendidas - '"+entradas+"' WHERE codpelicula = '"+codPelicula+"'";
+		try{
+			this.abrir();
+			s=c.createStatement();
+			int n=s.executeUpdate(consulta);				
+			s.close();
+			this.cerrar();
+			return n;
+		}
+		catch ( SQLException e){
+	
+			return -1;			
+		}	
+	}
+	/**
+	 * Funcion que Devuelve la cartelera entera
+	 * @author Javier
+	 * @return
+	 */	
+	public String PeliTaquillera(){
+		String cadenaSQL="SELECT nombre, MAX(totalvendidas) FROM pelicula";
+		String nombre="";
+		try{
+			this.abrir();
+			s=c.createStatement();
+			reg=s.executeQuery(cadenaSQL);
+			while ( reg.next()){
+				nombre= reg.getString(1);
+			}
+			s.close();
+			this.cerrar();
+			return nombre;
+		}
+		catch ( SQLException e){		
+			return null;			
+		}
 	}
 }

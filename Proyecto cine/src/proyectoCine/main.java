@@ -33,7 +33,7 @@ import java.time.*;
 public class main {
 	public static void main(String[] args) throws IOException{
 		Scanner sc = new Scanner(System.in);
-		
+		int opcCL=0;
 		BD_Cliente bd = new BD_Cliente("mysql-properties.xml");	
 		BD_Usuario bd2 = new BD_Usuario("mysql-properties.xml");
 		BD_Empleado bd3 = new BD_Empleado("mysql-properties.xml");
@@ -285,35 +285,206 @@ public class main {
 							opcionUsuario=5; // Le asigno el 5 para que entre a mostrar el mensaje de error
 							sc.nextLine(); // Limpieza de buffer
 							}
+							if (opcionUsuario==1){
+								do{
+									try{
+										System.out.println("¿Que campo desea modificar?");
+										System.out.println("1.- Numero de tarjeta");
+										System.out.println("2.- Telefono de contacto principal");
+										System.out.println("3.- SALIR");
+										opcCL=sc.nextInt();
+										}catch(InputMismatchException e){
+											opcCL=4;
+											sc.nextLine(); // Limpieza de buffer
+										}
+									if (opcCL==1){
+										System.out.println("Introduzca el nuevo numero de tarjeta que desea asociar a su cuenta.");
+										int numTarjeta=sc.nextInt();
+										int comprCambioTarj=bd.CambioNumTarjeta(numTarjeta, resultadoBusqueda);
+										switch(comprCambioTarj){
+											case 1:
+												System.out.println("Se ha realizado el cambio con exito");
+											case -1:
+												System.out.println("En estos momentos no se puede realizar el cambio");
+										}	
+									}
+									//
+									//Fin opcion 1 (EDITAR NUM TARJETA)
+									//
+									if (opcCL==2){
+										System.out.println("Introduzca el nuevo numero de contacto");
+										int numCont=sc.nextInt();
+										int comprCambioTelf=bd.CambioTelfContacto(numCont, resultadoBusqueda);
+										switch(comprCambioTelf){
+										case 1:
+											System.out.println("Se ha realizado el cambio con exito");
+										case -1:
+											System.out.println("En estos momentos no se puede realizar el cambio");
+									}
+									}
+									//
+									//Fin opcion 2 (EDITAR NUM TELEFONO)
+									//
+									if (opcCL==3){
+										System.out.println("\n");
+									}
+									//
+									if (opcCL==4){
+										System.out.println("ERROR!");
+									}
+									//
+								}while(opcCL!=3);
+							}
+							//
+							//Fin opcion 1
+							//
+							if (opcionUsuario==2){
+								do{
+									try{
+										System.out.println("\nSolo se podran realizar modificaciones de la ultima compra\n");
+										System.out.println("Seleccione lo que quiere modificar");
+										System.out.println("1.- Modificar el numero de entradas a comprar");
+										System.out.println("2.- Modificar la pelicula que va a ver");
+										System.out.println("3.- SALIR");
+										opcCL=sc.nextInt();
+									}catch(InputMismatchException e){
+										opcCL=4;
+										sc.nextLine(); // Limpieza de buffer
+									}
+									if(opcCL==1){
+										String CodCompraUlt="CA"+bd8.UltimaCompraCliente(resultadoBusqueda);
+										if (CodCompraUlt.equals("CA ")){
+											System.out.println("Aun no se han realizado compras, no se podra editar nada");
+											break;
+										}
+										else{
+											int numEntradasAntiguo=bd8.CantidadUltimaCompra(CodCompraUlt);
+											double precioEntAntiguo=bd8.precioUltimaCompra(CodCompraUlt);
+											String codSesionUlt=bd8.CodSesionUltimaCompra(CodCompraUlt);
+											String codPelUlt=bd6.GetterCodPel(codSesionUlt);
+											if (bd6.SumaButacas(numEntradasAntiguo, codSesionUlt)!=-1){
+												if(bd5.RestaPelis(numEntradasAntiguo, codPelUlt)!=-1){
+													if(bd8.RestaButacasyDinero(numEntradasAntiguo, CodCompraUlt, precioEntAntiguo)!=-1){ //
+														System.out.println("Introduce el numero de entradas que quiere comprar");
+														int entNew=sc.nextInt();
+														int ComprRestaButa=bd6.RestaButacas(entNew,codSesionUlt);
+														int ComprSumaEntradas=bd5.SumaPelis(entNew,codPelUlt);
+														if(codigo.indexOf("CE")!=-1){ 
+															double precio=entNew*10;
+															precio=precio-(precio*0.3);
+															int EditarEntradasPrecio=bd8.SumaButacasyDinero(entNew, CodCompraUlt, precio); //
+														}
+														else{
+															double precio=entNew*10;
+															int EditarEntradasPrecio=bd8.SumaButacasyDinero(entNew, CodCompraUlt, precio); //
+														}
+													}
+													else{
+														System.out.println("En estos momentos no se puede realizar la peticion solicitada");
+													}
+												}
+												else{
+													System.out.println("En estos momentos no se puede realizar la peticion solicitada");
+												}
+											}
+											else{
+												System.out.println("En estos momentos no se puede realizar la peticion solicitada");
+											}
+										}
+									}
+									//
+									//Fin opcion 1 (EDITAR COMPRA)
+									//
+									if (opcCL==2){
+										String CodCompraUlt="CA"+bd8.UltimaCompraCliente(resultadoBusqueda);
+										if (CodCompraUlt.equals("CA ")){
+											System.out.println("Aun no se han realizado compras, no se podra editar nada");
+											break;
+										}
+										else{
+											int numEntradasAntiguo=bd8.CantidadUltimaCompra(CodCompraUlt);
+											double precioEntAntiguo=bd8.precioUltimaCompra(CodCompraUlt);
+											String codSesionUlt=bd8.CodSesionUltimaCompra(CodCompraUlt);
+											String codPelUlt=bd6.GetterCodPel(codSesionUlt);
+											if (bd6.SumaButacas(numEntradasAntiguo, codSesionUlt)!=-1){
+												if(bd5.RestaPelis(numEntradasAntiguo, codPelUlt)!=-1){
+													Vector <Pelicula> listado=bd5.listadoPeliculas();
+													System.out.println("|--------------------------------------------------------------|");
+													System.out.println("|---------------------------TAQUILLA---------------------------|");
+													System.out.println("|--------------------------------------------------------------|");
+													for (int i=0;i<listado.size();i++){									
+														System.out.println("| "+listado.get(i).toString()+" |");
+													}
+													System.out.println("|--------------------------------------------------------------|\n");
+													System.out.println("Introduce el codigo de la pelicula que quieres ver");
+													sc.nextLine();
+													String codPelNew=sc.nextLine();
+													String codSesionNew=bd6.GetterCodSesion(codPelNew);
+													int ButTot=bd6.NumeroButacasRestantes(codSesionNew);
+													if (numEntradasAntiguo>ButTot){
+														System.out.println("No hay suficientes butacas. ERROR!");
+													}
+													else{
+														int ComprRestaButa=bd6.RestaButacas(numEntradasAntiguo,codSesionNew);
+														int ComprSumaEntradas=bd5.SumaPelis(numEntradasAntiguo,codPelNew);
+														int EditarCodSesion=bd8.EditarNumSesion(codSesionNew, CodCompraUlt);
+														System.out.println("Cambios Realizados");
+													}
+												}
+												else{
+													System.out.println("En estos momentos no se puede realizar la peticion solicitada");
+												}
+											}
+											else{
+												System.out.println("En estos momentos no se puede realizar la peticion solicitada");
+											}
+										}
+									}
+									//
+									//Fin opcion 2 (EDITAR PELI)
+									//
+									if (opcCL==3){
+										System.out.println("Saliendo...");
+									}
+									//
+									//Fin opcion 3
+									//
+									if (opcCL>4){
+										System.out.println("Opcion erronea.");
+									}
+								}while(opcCL!=3);
+							}
+							//
+							//Fin opcion 2
+							//
 							if (opcionUsuario==3){
 								int ButTot=0;//Cantidad de butacas que quedan libre para luego poder validar si se podra realizar la compra o no. **
 								int Butacas=0;
 								Compra Com;
 								String CodCompra=crearCodigoCompra(bd8);
 								Vector <Pelicula> listado=bd5.listadoPeliculas();
-								System.out.println("|------------------------------------------------|");
-								System.out.println("|---------------------TAQUILLA-------------------|");
-								System.out.println("|------------------------------------------------|");
+								System.out.println("|--------------------------------------------------------------|");
+								System.out.println("|---------------------------TAQUILLA---------------------------|");
+								System.out.println("|--------------------------------------------------------------|");
 								for (int i=0;i<listado.size();i++){									
-									System.out.println(listado.get(i).toString());
+									System.out.println("| "+listado.get(i).toString()+" |");
 								}
-								System.out.println("|----------------------------------|\n");
+								System.out.println("|--------------------------------------------------------------|\n");
 								sc.nextLine();
 								//Listado de todas las peliculas para poder ver el codigo de la pelicula que quieres ver.
 								System.out.println("Introduzca el cod de la pelicula que quieres ver");
-								String codpel=sc.nextLine();
-								String codSesion=bd6.GetterCodSesion(codpel);
+								String codPel=sc.nextLine();
+								String codSesion=bd6.GetterCodSesion(codPel);
 								ButTot=bd6.NumeroButacasRestantes(codSesion); //**
 								System.out.println("El numero de butacas restantes es de: "+ButTot+". Introduzca el numero de entradas que quiere comprar");
 								Butacas=sc.nextInt();
-								
 								if (Butacas>ButTot){
 									System.out.println("No hay suficientes butacas. ERROR!");
 								}
 								else{
 									int ComprRestaButa=bd6.RestaButacas(Butacas,codSesion);
 									if (ComprRestaButa==1){
-										int ComprSumaEntradas=bd5.SumaPelis(Butacas,codpel);
+										int ComprSumaEntradas=bd5.SumaPelis(Butacas,codPel);
 										if (ComprSumaEntradas==1){
 											if(codigo.indexOf("CE")!=-1){ //If para poder realizar la compra con el descuento en caso de que el usuario sea especial.
 												double precio=Butacas*10;
@@ -343,10 +514,16 @@ public class main {
 								}
 							}
 							//Fin opcion 3
+							if(opcionUsuario==4){
+								String taquillera=bd5.PeliTaquillera();
+								System.out.println("La pelicula mas vista en este momento es: "+taquillera);
+							}
 							if(opcionUsuario==5)
 								System.out.print("\n--- HASTA PRONTO ---\n");
 							//Fin opcion 5
-						
+							if (opcionUsuario>5)
+								System.out.println("ERROR!");
+							//Fin opcion de error
 						}while(opcionUsuario!=5);
 						}
 						// Fin Opcion Cliente	
