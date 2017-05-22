@@ -375,7 +375,7 @@ public class main {
 										
 									}catch(InputMismatchException e){
 										
-										opcionUsuario=9; // Le asigno el 9 para que entre a mostrar el mensaje de error
+										opcionUsuario=11; // Le asigno el 9 para que entre a mostrar el mensaje de error
 										sc.nextLine(); // Limpieza de buffer
 									}
 										
@@ -808,7 +808,7 @@ public class main {
 								}while(opcionUsuario>9); // Control de errores para que introduzca el jefe de empleado una opcion válida
 								
 							}while(opcionUsuario!=9);
-							// salimos cuando opcionUsuario==8
+							// salimos cuando opcionUsuario==9
 						}
 						
 						
@@ -832,7 +832,7 @@ public class main {
 						}
 					
 							
-					}
+					} 
 			
 				}
 			
