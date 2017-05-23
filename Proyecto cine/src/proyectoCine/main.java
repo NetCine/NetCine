@@ -43,7 +43,7 @@ public class main {
 		BD_Peticion bd7 = new BD_Peticion ("mysql-properties.xml");
 		BD_Compra bd8 = new BD_Compra ("mysql-properties.xml");
 		
-		int opcion1=0, opcionUsuario, opcionCupon=0;
+		int opcion1=0, opcionUsuario, opcionCupon=0,opcionEmpleado=0;
 		
 		Vector <String> codigosPromocionales = new Vector <String> (); // Array donde tenemos los codigos promocionales para poder registrarse como usuario especial		
 		
@@ -669,7 +669,7 @@ public class main {
 										String codNomina = crearCodigoNomina (bd4); 
 										
 										// Creo los objetos
-										emple = new Empleado(codEmple, nombreEmple, apellidosEmple, dniEmple, telefonoEmple, correoEmple,	claveEmple, codNomina, funcion, puesto, fecha);
+										emple = new Empleado(codEmple, nombreEmple, apellidosEmple, dniEmple, telefonoEmple, correoEmple,claveEmple, funcion, puesto, fecha);
 										nom = new Nomina(salario, dniEmple, codNomina);
 										usuEmpleado = new Usuario(codEmple, correoEmple, clave);
 										
@@ -1025,27 +1025,73 @@ public class main {
 							/*METODO PARA EL EMPLEADO DEL CINE*/
 							
 							System.out.println("\n-- SE HA CONECTADO COMO EMPLEADO, BIENVENIDO --");
-							System.out.println("\nElija una opcion:");
-							System.out.println("1.- Ver fecha de inicio en el trabajo"); // consulta que nos saque el campo jornada de empleado
-							System.out.println("2.- Añadir peticion nueva");
-							System.out.println("3.- Ver peticiones aceptadas");
-							System.out.println("4.- Desconectarse");
-							System.out.print("--- Opcion: ");
-							opcionUsuario=sc.nextInt();
+							do{
+								try{
+									System.out.println("\nElija una opcion:");
+									System.out.println("1.- Ver fecha de inicio en el trabajo"); // consulta que nos saque el campo jornada de empleado
+									System.out.println("2.- Añadir peticion nueva");
+									System.out.println("3.- Ver peticiones aceptadas");
+									System.out.println("4.- Desconectarse");
+									System.out.print("--- Opcion: ");
+									opcionEmpleado=sc.nextInt();
+								}catch(InputMismatchException e){
+									opcionEmpleado=5;
+									sc.nextLine(); // Limpieza de buffer
+								}
+								if(opcionEmpleado==1){
+									
+									LocalDate l=bd3.buscarJornada(resultadoBusqueda);
+									System.out.println("\n-- Tu dia de inicio en el trabajo es: "+l.getDayOfMonth()+" "+l.getMonth()+" "+l.getYear());	
+								}																																					
+								if(opcionEmpleado==2){
+									sc.nextLine();
+									System.out.println("Introduce tu DNI");
+									String dniEmpleado=sc.nextLine();
+									System.out.println("Introduce el motivo de tu peticion");
+									String motivoPeticion=sc.nextLine();
+									//creamos el codigo de la peticion
+									String crearCodigoPeticionNueva = crearCodigoPeticion(bd7);
+									//creamos la peticion
+									Peticion pp= new Peticion(crearCodigoPeticionNueva, motivoPeticion, dniEmpleado);
+									// metemos esta nueva sesion en bbdd
+									if(bd7.añadirPeticion(pp)==true)
+										System.out.println("\nTu peticion se ha añadido correctamente");
+									else
+										System.out.println("\n-- ERROR, la peticion no se ha podido añadir");
+								}
+								if(opcionEmpleado==3){
+									Vector <Peticion> peticionesEmpAceptadas = new Vector <Peticion> ();
+									
+									peticionesEmpAceptadas=bd7.listaPeticionesAceptadas();
+									if(peticionesEmpAceptadas!=null){ // Si tenemos peticiones por revisar
+										System.out.println("\nEstas son las peticiones aceptadas: \n");	
+										for(int i=0;i<peticionesEmpAceptadas.size();i++){
+											System.out.println(peticionesEmpAceptadas.get(i).toString());											
+											
+										}
+									
+								}
+								}
+								
+														
+								if(opcionEmpleado==4)
+									System.out.print("\n--- HASTA PRONTO ---\n");
+								if(opcionEmpleado>4)
+									System.out.println("\n--- ERROR, OPCION NO VALIDA\n");
 						
-							
-							if(opcionUsuario==3)
-								System.out.print("\n--- HASTA PRONTO ---\n");
-						}
+							}while(opcionEmpleado!=4);
+						
+						//resultadoBusqueda codigo del empleado que se conecta
+						}// Fin opciones de empleado
 					
 							
-					} 
+					}
 			
 				}
 			
 			if(opcion1==3)
 				System.out.println("\n--- HA CERRADO LA APLICACION ---");
-		
+			
 			
 		}while(opcion1!=3);
 		
@@ -1262,7 +1308,6 @@ public class main {
 		
 		
 	}
-
 	/**
 	 * Metodo que crea el codigo de las peliculas nuevas
 	 * @author cesar
@@ -1323,4 +1368,32 @@ public class main {
 		
 		
 	}
+	/**
+	 * Metodo que crea el codigo de las peticiones nuevas
+	 * @author diego
+	 * @param bd
+	 * @return
+	 */
+public static String crearCodigoPeticion(BD_Peticion bd){
+		
+		String codigo="";
+		int numeroCodigo = bd.contadorPeticion();
+		numeroCodigo++;
+
+		// El codigo para un peticion se genera con las siglas PT mas los ceros que necesite segun los usuarios que ya haya
+		
+		if(numeroCodigo<10)
+			codigo="PE"+"000"+numeroCodigo;
+		
+		if(numeroCodigo>=10 && numeroCodigo<=99)
+			codigo = "PE"+"00"+numeroCodigo;
+		
+		if(numeroCodigo>99)
+			codigo = "PE"+"0"+numeroCodigo;
+		
+		if(numeroCodigo>999)
+			codigo = "PE"+numeroCodigo;
+		
+		return codigo;
+}
 }

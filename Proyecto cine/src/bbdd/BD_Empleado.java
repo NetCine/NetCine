@@ -33,7 +33,7 @@ public class BD_Empleado extends BD_Conector {
 	 */
 	public boolean añadirEmpleado(Empleado emple){
 		
-		String consulta = "INSERT INTO empleado VALUES('" + emple.getCodEmple() + "','" + emple.getNombre() + "','" + emple.getApellidos() + "','" + emple.getDni() + "','" + emple.getTelefono() + "','" + emple.getCorreo() + "','" + emple.getClave() + "','" + emple.getFecha() + "','" + emple.getCodNomina() + "','" + emple.getFuncion() + "','" + emple.getDescipcionPuesto() + "')";
+		String consulta = "INSERT INTO empleado VALUES('" + emple.getCodEmple() + "','" + emple.getNombre() + "','" + emple.getApellidos() + "','" + emple.getDni() + "','" + emple.getTelefono() + "','" + emple.getCorreo() + "','" + emple.getClave() + "','" + emple.getFecha() +"','" + emple.getFuncion() + "','" + emple.getDescipcionPuesto() + "')";
 		
 		try{
 			this.abrir();
@@ -82,7 +82,7 @@ public class BD_Empleado extends BD_Conector {
 	 */
 	public int borrarEmpleado(Empleado emple){
 		
-		String consulta = "DELETE FROM empleado WHERE codemple='" +  emple.getCodEmple() + "' AND nombre='" + emple.getNombre()+"' AND apellidos='" + emple.getApellidos()+"' AND dni='" + emple.getDni()+"' AND telefono='" + emple.getTelefono()+"' AND correo='" + emple.getCorreo()+"' AND clave='" + emple.getClave() +"' AND jornadas='" + emple.getFecha() + "' AND codnomina='" + emple.getCodNomina() + "' AND funcion='" + emple.getFuncion() + "' AND descripcionpuesto='" + emple.getDescipcionPuesto() + "'";	
+		String consulta = "DELETE FROM empleado WHERE codemple='" +  emple.getCodEmple() + "' AND nombre='" + emple.getNombre()+"' AND apellidos='" + emple.getApellidos()+"' AND dni='" + emple.getDni()+"' AND telefono='" + emple.getTelefono()+"' AND correo='" + emple.getCorreo()+"' AND clave='" + emple.getClave() +"' AND jornadas='" + emple.getFecha() +"' AND funcion='" + emple.getFuncion() + "' AND descripcionpuesto='" + emple.getDescipcionPuesto() + "'";	
 		
 		try{
 			this.abrir();
@@ -180,7 +180,7 @@ public class BD_Empleado extends BD_Conector {
 				java.sql.Date f=reg.getDate("jornadas"); // Cogemos la fecha que tenemos en la bbdd en el registro cuyo nombre es jornadas
 				LocalDate fBuena=f.toLocalDate(); // Pasamos esa ficha a LocalDate (que es lo que necesitamos en nuestro constructor)
 				
-				listaEmpleados.add(new Empleado(reg.getString("codemple"),reg.getString("nombre"),reg.getString("apellidos"),reg.getString("dni"),reg.getString("telefono"),reg.getString("correo"),reg.getString("clave"),reg.getString("codnomina"),reg.getString("funcion"),reg.getString("descripcionpuesto"),fBuena));
+				listaEmpleados.add(new Empleado(reg.getString("codemple"),reg.getString("nombre"),reg.getString("apellidos"),reg.getString("dni"),reg.getString("telefono"),reg.getString("correo"),reg.getString("clave"),reg.getString("funcion"),reg.getString("descripcionpuesto"),fBuena));
 				
 			}
 			s.close();
@@ -191,6 +191,36 @@ public class BD_Empleado extends BD_Conector {
 			return null;			
 		}
 	}
+	/**
+	 * Pasamos un empleado y nos devuelve la fecha de la jornada en la que ha inicado el trabajo
+	 * @author diego
+	 * @param emple
+	 * @return
+	 */
 	
+	public LocalDate buscarJornada(String codemple ){
+		LocalDate fbuena=null;
+	String cadena="SELECT Jornadas FROM empleado where codemple='" + codemple+"' ";
+		try{
+			
+			this.abrir();
+			s=c.createStatement();
+			reg=s.executeQuery(cadena);
+			if (reg.next()){
+			
+			java.sql.Date f=reg.getDate("jornadas"); // Cogemos la fecha que tenemos en la bbdd en el registro cuyo nombre es jornadas
+			fbuena=f.toLocalDate(); // Pasamos esa ficha a LocalDate (que es lo que necesitamos en nuestro constructor)	
+			}
+			
+			s.close();
+			this.cerrar();
+			return fbuena;
+		}
+		catch ( SQLException e){
+
+			this.cerrar();
+			return null;
+		}
+	}
 	
 }

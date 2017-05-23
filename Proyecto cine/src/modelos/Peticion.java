@@ -8,7 +8,7 @@ package modelos;
 public class Peticion {
 
 	private String codigoPeticion, motivoPeticion, dniEmpleado;
-	private boolean estado, revisado;
+	private int estado, revisado;
 	
 	
 	/**
@@ -23,8 +23,8 @@ public class Peticion {
 		this.codigoPeticion = codigoPeticion;
 		this.motivoPeticion = motivoPeticion;
 		this.dniEmpleado = dniEmpleado;
-		this.estado = false;
-		this.revisado = false;
+		this.estado = 0;
+		this.revisado = 0;
 	}
 
 
@@ -86,7 +86,7 @@ public class Peticion {
 	 * @author cesar
 	 * @return the estado
 	 */
-	public boolean isEstado() {
+	public int isEstado() {
 		return estado;
 	}
 
@@ -95,7 +95,7 @@ public class Peticion {
 	 * @author cesar
 	 * @param estado the estado to set
 	 */
-	public void setEstado(boolean estado) {
+	public void setEstado(int estado) {
 		this.estado = estado;
 	}
 
@@ -104,7 +104,7 @@ public class Peticion {
 	 * @author cesar
 	 * @return the revisado
 	 */
-	public boolean isRevisado() {
+	public int isRevisado() {
 		return revisado;
 	}
 
@@ -113,14 +113,9 @@ public class Peticion {
 	 * @author cesar
 	 * @param revisado the revisado to set
 	 */
-	public void setRevisado(boolean revisado) {
+	public void setRevisado(int revisado) {
 		this.revisado = revisado;
 	}
-
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	/**
 	 * toString clase peticion

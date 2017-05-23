@@ -11,7 +11,7 @@ import java.time.*;
 
 public class Empleado {
 	
-	private String codEmple, nombre, apellidos, dni, telefono, correo, clave, codNomina, funcion, descipcionPuesto;
+	private String codEmple, nombre, apellidos, dni, telefono, correo, clave, funcion, descipcionPuesto;
 	private LocalDate fecha;
 	
 	/**
@@ -30,7 +30,7 @@ public class Empleado {
 	 * @param fecha
 	 */
 	public Empleado(String codEmple, String nombre, String apellidos, String dni, String telefono, String correo,
-			String clave, String codNomina, String funcion, String descipcionPuesto, LocalDate fecha) {
+			String clave, String funcion, String descipcionPuesto, LocalDate fecha) {
 		super();
 		this.codEmple = codEmple;
 		this.nombre = nombre;
@@ -39,7 +39,6 @@ public class Empleado {
 		this.telefono = telefono;
 		this.correo = correo;
 		this.clave = clave;
-		this.codNomina = codNomina;
 		this.funcion = funcion;
 		this.descipcionPuesto = descipcionPuesto;
 		this.fecha = fecha;
@@ -115,15 +114,7 @@ public class Empleado {
 	public String getClave() {
 		return clave;
 	}
-
-	/**
-	 * @author cesar
-	 * @return the codNomina
-	 */
-	public String getCodNomina() {
-		return codNomina;
-	}
-
+	
 	/**
 	 * @author cesar
 	 * @return the funcion
@@ -206,14 +197,6 @@ public class Empleado {
 
 	/**
 	 * @author cesar
-	 * @param codNomina the codNomina to set
-	 */
-	public void setCodNomina(String codNomina) {
-		this.codNomina = codNomina;
-	}
-
-	/**
-	 * @author cesar
 	 * @param funcion the funcion to set
 	 */
 	public void setFuncion(String funcion) {
@@ -246,7 +229,7 @@ public class Empleado {
 		return "Codigo de empleado: " + codEmple + ", con nombre: " + nombre
 				+ " " + apellidos + ", con dni: " + dni + ", telefono de contacto: "
 				+ telefono + ", con email: " + correo + ", cuya clave de acceso es: " + clave
-				+ ", codigo de nomina: " + codNomina + ", su funcion en el cine es: " + funcion
+				+", su funcion en el cine es: " + funcion
 				+ " y la descipcion de su puesto: " + descipcionPuesto + ", su fecha de entrada: " + fecha;
 	}
 
