@@ -46,10 +46,10 @@ public class main {
 		int opcion1=0, opcionUsuario, opcionCupon=0,opcionEmpleado=0;
 		
 		Vector <String> codigosPromocionales = new Vector <String> (); // Array donde tenemos los codigos promocionales para poder registrarse como usuario especial		
-		
-		System.out.println("|----------------------------------|");
-		System.out.println("|------ BIENVENIDO A NETCINE ------|");
-		System.out.println("|----------------------------------|\n\n");
+		System.out.println("\n");
+		System.out.println("\t\t\t\t\t\t\t\t\t\t|----------------------------------|");
+		System.out.println("\t\t\t\t\t\t\t\t\t\t|------ BIENVENIDO A NETCINE ------|");
+		System.out.println("\t\t\t\t\t\t\t\t\t\t|----------------------------------|\n\n");
 		
 		do{
 			do{
