@@ -156,7 +156,7 @@ public class BD_Compra extends BD_Conector {
 			return cod;
 		}
 		catch ( SQLException e){
-			return null;			
+			return "A";			
 		}	
 	}
 	/**

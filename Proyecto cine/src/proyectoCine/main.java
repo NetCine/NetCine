@@ -382,7 +382,7 @@ public class main {
 									}
 									if(opcCL==1){
 										String CodCompraUlt="CA"+bd8.UltimaCompraCliente(resultadoBusqueda);
-										if (CodCompraUlt.equals("CA ")){
+										if (CodCompraUlt.equals("CAnull")){
 											System.out.println("Aun no se han realizado compras, no se podra editar nada");
 											break;
 										}
@@ -427,7 +427,7 @@ public class main {
 									//
 									if (opcCL==2){
 										String CodCompraUlt="CA"+bd8.UltimaCompraCliente(resultadoBusqueda);
-										if (CodCompraUlt.equals("CA ")){
+										if (CodCompraUlt.equals("CAnull")){
 											System.out.println("Aun no se han realizado compras, no se podra editar nada");
 											break;
 										}
