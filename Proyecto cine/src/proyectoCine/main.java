@@ -443,11 +443,11 @@ public class main {
 													System.out.println("\n");
 													System.out.println("\t\t\t\t\t\t\t\t\t\t|--------------------------------------------------------------|");
 													System.out.println("\t\t\t\t\t\t\t\t\t\t|---------------------------TAQUILLA---------------------------|");
-													System.out.println("\t\t\t\t\t\t\t\t\t\t|--------------------------------------------------------------|\n\n");
+													System.out.println("\t\t\t\t\t\t\t\t\t\t|--------------------------------------------------------------|");
 													for (int i=0;i<listado.size();i++){									
-														System.out.println("| "+listado.get(i).toString()+" |");
+														System.out.println("\t\t\t\t\t\t\t\t\t\t| "+listado.get(i).toString()+" |");
 													}
-													System.out.println("|--------------------------------------------------------------|\n");
+													System.out.println("\t\t\t\t\t\t\t\t\t\t|--------------------------------------------------------------|\n\n");
 													System.out.println("Introduce el codigo de la pelicula que quieres ver");
 													sc.nextLine();
 													String codPelNew=sc.nextLine();
@@ -495,13 +495,14 @@ public class main {
 								Compra Com;
 								String CodCompra=crearCodigoCompra(bd8);
 								Vector <Pelicula> listado=bd5.listadoPeliculas();
-								System.out.println("|--------------------------------------------------------------|");
-								System.out.println("|---------------------------TAQUILLA---------------------------|");
-								System.out.println("|--------------------------------------------------------------|");
+								System.out.println("\n");
+								System.out.println("\t\t\t\t\t\t\t\t\t\t|--------------------------------------------------------------|");
+								System.out.println("\t\t\t\t\t\t\t\t\t\t|---------------------------TAQUILLA---------------------------|");
+								System.out.println("\t\t\t\t\t\t\t\t\t\t|--------------------------------------------------------------|");
 								for (int i=0;i<listado.size();i++){									
-									System.out.println("| "+listado.get(i).toString()+" |");
+									System.out.println("\t\t\t\t\t\t\t\t\t\t| "+listado.get(i).toString()+" |");
 								}
-								System.out.println("|--------------------------------------------------------------|\n");
+								System.out.println("\t\t\t\t\t\t\t\t\t\t|--------------------------------------------------------------|\n\n");
 								sc.nextLine();
 								//Listado de todas las peliculas para poder ver el codigo de la pelicula que quieres ver.
 								System.out.println("Introduzca el cod de la pelicula que quieres ver");

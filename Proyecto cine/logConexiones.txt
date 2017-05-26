@@ -1,2 +1,12 @@
 Mail		Clave		Fecha
 Ejemplo@normal.com	a1234567	2017-05-26
+
+Cliente@especial.com	a1234567.	2017-05-26
+
+Cliente@especial.com	a1234567.	2017-05-26
+
+Cliente@especial.com	a1234567.	2017-05-26
+
+Cliente@especial.com	a1234567.	2017-05-26
+
+Cliente@especial.com	a1234567.	2017-05-26

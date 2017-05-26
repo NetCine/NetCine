@@ -77,7 +77,7 @@ public class Pelicula {
 	 */
 	@Override
 	public String toString() {
-		return "Pelicula [nombrePelicula=" + nombrePelicula
-				+ ", codigoPelicula=" + codigoPelicula + "]";
+		return "\t nombrePelicula: " + nombrePelicula
+				+ ", codigoPelicula: " + codigoPelicula;
 	}
 }
