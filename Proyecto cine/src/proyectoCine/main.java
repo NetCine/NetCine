@@ -430,6 +430,7 @@ public class main {
 										if (CodCompraUlt.equals("CAnull")){
 											System.out.println("Aun no se han realizado compras, no se podra editar nada");
 											break;
+											
 										}
 										else{
 											int numEntradasAntiguo=bd8.CantidadUltimaCompra(CodCompraUlt);
@@ -439,9 +440,10 @@ public class main {
 											if (bd6.SumaButacas(numEntradasAntiguo, codSesionUlt)!=-1){
 												if(bd5.RestaPelis(numEntradasAntiguo, codPelUlt)!=-1){
 													Vector <Pelicula> listado=bd5.listadoPeliculas();
-													System.out.println("|--------------------------------------------------------------|");
-													System.out.println("|---------------------------TAQUILLA---------------------------|");
-													System.out.println("|--------------------------------------------------------------|");
+													System.out.println("\n");
+													System.out.println("\t\t\t\t\t\t\t\t\t\t|--------------------------------------------------------------|");
+													System.out.println("\t\t\t\t\t\t\t\t\t\t|---------------------------TAQUILLA---------------------------|");
+													System.out.println("\t\t\t\t\t\t\t\t\t\t|--------------------------------------------------------------|\n\n");
 													for (int i=0;i<listado.size();i++){									
 														System.out.println("| "+listado.get(i).toString()+" |");
 													}
