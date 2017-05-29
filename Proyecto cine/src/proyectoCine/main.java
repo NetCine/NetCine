@@ -163,7 +163,7 @@ public class main {
 							correo=sc.nextLine();
 							
 							correoValido=1;
-							if(correo.indexOf("@")==-1){							
+							if(correo.indexOf("@")==-1 || (correo.indexOf(".com")==-1 && correo.indexOf(".es")==-1)){							
 								System.out.println("\n--- Correo no válido, inserte de nuevo.");
 								correoValido=0;
 							}
