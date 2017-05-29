@@ -145,11 +145,9 @@ public class main {
 						fechaNacimiento=(LocalDate.of(anyo,mes,dia)); // Se genera la fecha
 												
 						Period tiempo = Period.between(fechaNacimiento,LocalDate.now()); // Comprobamos la difrencia de fechas para ver si es o no mayor de edad
-						
-						System.out.print(tiempo.getYears());
-						
+												
 						if(tiempo.getYears()<18){ // En caso de ser menor de edad no dejamos que se registre.
-							System.out.println("\n--- Lo sentimos no eres aún mayor de 18 años y por lo tanto no puedes registrarte en NetCine\n");
+							System.out.println("\n--- Lo sentimos no eres aún mayor de 18 años, tienes: "+tiempo.getYears()+" años y por lo tanto no puedes registrarte en NetCine\n");
 							tipoCliente=0;
 							break;
 						}
