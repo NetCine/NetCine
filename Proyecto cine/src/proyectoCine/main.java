@@ -34,6 +34,7 @@ public class main {
 	public static void main(String[] args) throws IOException{
 		Scanner sc = new Scanner(System.in);
 		int opcCL=0;
+		int entNew=0;
 		BD_Cliente bd = new BD_Cliente("mysql-properties.xml");	
 		BD_Usuario bd2 = new BD_Usuario("mysql-properties.xml");
 		BD_Empleado bd3 = new BD_Empleado("mysql-properties.xml");
@@ -298,32 +299,54 @@ public class main {
 											sc.nextLine(); // Limpieza de buffer
 										}
 									if (opcCL==1){
+										int numTarjeta=0;
 										System.out.println("Introduzca el nuevo numero de tarjeta que desea asociar a su cuenta.");
-										int numTarjeta=sc.nextInt();
-										int comprCambioTarj=bd.CambioNumTarjeta(numTarjeta, resultadoBusqueda);
-										switch(comprCambioTarj){
+										try{
+										numTarjeta=sc.nextInt();
+										}catch(InputMismatchException e){
+											numTarjeta=1;
+											sc.nextLine();
+										}
+										if (numTarjeta!=1){
+											int comprCambioTarj=bd.CambioNumTarjeta(numTarjeta, resultadoBusqueda);
+											switch(comprCambioTarj){
+												case 1:
+													System.out.println("Se ha realizado el cambio con exito");
+													break;
+												case -1:
+													System.out.println("En estos momentos no se puede realizar el cambio");
+													break;
+											}	
+										}
+										else{
+											System.out.println("Datos erroneos, no se ha podido realizar la actualizacion de datos");
+										}
+									}
+									//
+									//Fin opcion 1 (EDITAR NUM TARJETA)
+									//
+									if (opcCL==2){
+										int numCont=0;
+										System.out.println("Introduzca el nuevo numero de contacto");
+										try{
+										numCont=sc.nextInt();
+										}catch(InputMismatchException e){
+											numCont=1;
+											sc.nextLine();
+										}
+										if(numCont!=1){
+											int comprCambioTelf=bd.CambioTelfContacto(numCont, resultadoBusqueda);
+											switch(comprCambioTelf){
 											case 1:
 												System.out.println("Se ha realizado el cambio con exito");
 												break;
 											case -1:
 												System.out.println("En estos momentos no se puede realizar el cambio");
 												break;
-										}	
-									}
-									//
-									//Fin opcion 1 (EDITAR NUM TARJETA)
-									//
-									if (opcCL==2){
-										System.out.println("Introduzca el nuevo numero de contacto");
-										int numCont=sc.nextInt();
-										int comprCambioTelf=bd.CambioTelfContacto(numCont, resultadoBusqueda);
-										switch(comprCambioTelf){
-										case 1:
-											System.out.println("Se ha realizado el cambio con exito");
-											break;
-										case -1:
-											System.out.println("En estos momentos no se puede realizar el cambio");
-											break;
+											}
+										}
+										else{
+											System.out.println("Datos erroneos, no se ha podido realizar la actualizacion de datos");
 										}
 									}
 									//
@@ -359,7 +382,7 @@ public class main {
 										System.out.println("Opcion erronea.");
 									}
 									//
-								}while(opcCL!=3);
+								}while(opcCL!=4);
 							}
 							//
 							//Fin opcion 1
@@ -392,19 +415,30 @@ public class main {
 											if (bd6.SumaButacas(numEntradasAntiguo, codSesionUlt)!=-1){
 												if(bd5.RestaPelis(numEntradasAntiguo, codPelUlt)!=-1){
 													if(bd8.RestaButacasyDinero(numEntradasAntiguo, CodCompraUlt, precioEntAntiguo)!=-1){ //
-														System.out.println("Introduce el numero de entradas que quiere comprar");
-														int entNew=sc.nextInt();
-														int ComprRestaButa=bd6.RestaButacas(entNew,codSesionUlt);
-														int ComprSumaEntradas=bd5.SumaPelis(entNew,codPelUlt);
-														if(codigo.indexOf("CE")!=-1){ 
-															double precio=entNew*10;
-															precio=precio-(precio*0.3);
-															int EditarEntradasPrecio=bd8.SumaButacasyDinero(entNew, CodCompraUlt, precio); //
+														int ButTot=bd6.NumeroButacasRestantes(codSesionUlt); //**
+														try{
+															System.out.println("El numero de butacas restantes es de: "+ButTot+". Introduzca el numero de entradas que quiere comprar");
+															entNew=sc.nextInt();
+														}
+														catch(InputMismatchException e){
+															System.out.println("Datos erroneos, no se ha podido actualizar la compra");
+														}
+														if (entNew>ButTot){
+															System.out.println("No hay suficientes butacas. ERROR!");
 														}
 														else{
-															double precio=entNew*10;
-															int EditarEntradasPrecio=bd8.SumaButacasyDinero(entNew, CodCompraUlt, precio);
-															System.out.println("Cambios realizados");//
+															int ComprRestaButa=bd6.RestaButacas(entNew,codSesionUlt);
+															int ComprSumaEntradas=bd5.SumaPelis(entNew,codPelUlt);
+															if(codigo.indexOf("CE")!=-1){ 
+																double precio=entNew*10;
+																precio=precio-(precio*0.3);
+																int EditarEntradasPrecio=bd8.SumaButacasyDinero(entNew, CodCompraUlt, precio); //
+															}
+															else{
+																double precio=entNew*10;
+																int EditarEntradasPrecio=bd8.SumaButacasyDinero(entNew, CodCompraUlt, precio);
+																System.out.println("Cambios realizados");//
+															}
 														}
 													}
 													else{
@@ -455,10 +489,15 @@ public class main {
 														System.out.println("No hay suficientes butacas. ERROR!");
 													}
 													else{
-														int ComprRestaButa=bd6.RestaButacas(numEntradasAntiguo,codSesionNew);
-														int ComprSumaEntradas=bd5.SumaPelis(numEntradasAntiguo,codPelNew);
 														int EditarCodSesion=bd8.EditarNumSesion(codSesionNew, CodCompraUlt);
-														System.out.println("Cambios Realizados");
+														if (EditarCodSesion==-1){
+															System.out.println("Codigo de pelicula erroneo");
+														}
+														else{
+															int ComprRestaButa=bd6.RestaButacas(numEntradasAntiguo,codSesionNew);
+															int ComprSumaEntradas=bd5.SumaPelis(numEntradasAntiguo,codPelNew);
+															System.out.println("Cambios Realizados");
+														}
 													}
 												}
 												else{
@@ -507,8 +546,13 @@ public class main {
 								String codPel=sc.nextLine();
 								String codSesion=bd6.GetterCodSesion(codPel);
 								ButTot=bd6.NumeroButacasRestantes(codSesion); //**
+								try{
 								System.out.println("El numero de butacas restantes es de: "+ButTot+". Introduzca el numero de entradas que quiere comprar");
 								Butacas=sc.nextInt();
+								}
+								catch(InputMismatchException e){
+								System.out.println("Datos erroneos, no se ha podido realizar la compra");
+								}
 								if (Butacas>ButTot){
 									System.out.println("No hay suficientes butacas. ERROR!");
 								}

@@ -175,7 +175,6 @@ public class BD_Compra extends BD_Conector {
 			return n;
 		}
 		catch ( SQLException e){
-			System.out.println(e.getMessage());
 			return -1;			
 		}	
 	}
@@ -215,7 +214,6 @@ public class BD_Compra extends BD_Conector {
 			return n;
 		}
 		catch ( SQLException e){
-			System.out.println(e.getMessage());
 			return -1;			
 		}	
 	}
