@@ -48,7 +48,7 @@ public class BD_Sesion extends BD_Conector {
 	
 	public  boolean añadirSesion(Sesion ss){
 		
-		String consulta = "INSERT INTO pelicula VALUES('" + ss.getCodSesion() + "',"  + ss.getNumeroSala() + ",'" + ss.getHora() + "'," + ss.getNumeroButacasTotal() + ",'" + ss.getCodPelicula() + "')";
+		String consulta = "INSERT INTO sesion(codSesion,NumSala,Hora,numButacasTotal,CodPelicula) VALUES('" + ss.getCodSesion() + "',"  + ss.getNumeroSala() + ",'" + ss.getHora() + "'," + ss.getNumeroButacasTotal() + ",'" + ss.getCodPelicula() + "')";
 		
 		try{
 			this.abrir();
@@ -59,6 +59,7 @@ public class BD_Sesion extends BD_Conector {
 			return true;
 		}
 		catch ( SQLException e){
+			
 			this.cerrar();
 			return false;
 		}

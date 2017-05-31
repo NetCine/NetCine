@@ -72,3 +72,9 @@ cliente@normal.com	a12345678	2017-05-31
 cliente@especial.com	a1234567	2017-05-31
 
 jefe@jefe.com	a1234567	2017-05-31
+
+jefe@jefe.com	a1234567	2017-05-31
+
+jefe@jefe.com	a1234567	2017-05-31
+
+jefe@jefe.com	a1234567	2017-05-31
