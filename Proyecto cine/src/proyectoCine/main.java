@@ -808,12 +808,25 @@ public class main {
 											System.out.println("\n-- Vamos a añadir la sesion");
 											System.out.print("\nIntroduce numero de la sala: ");
 											int numeroSala=sc.nextInt();
-											System.out.print("\nIntroduce hora de la sala: ");
-											int horaSala=sc.nextInt();
-											System.out.print("\nIntroduce min de la sala: ");
-											int minSala=sc.nextInt();
-											//System.out.print("\nIntroduce anyo de la sala: ");
-											//int anyoSala=sc.nextInt();
+											int horaSala=0, minSala=0, error=0;
+											
+											do{
+												try{
+													error=0;
+													sc.nextLine();
+													System.out.print("\nIntroduce hora de la sala: ");
+													horaSala=sc.nextInt();
+												
+													System.out.print("\nIntroduce minutos de la sala: ");
+													minSala=sc.nextInt();
+													
+												}catch(InputMismatchException e){
+													System.out.println("\n-- Por favor introduce formato de datos correctos (12 en horas 15 en min)");
+													error=1;
+												}
+											}while(error==1);
+											
+											
 											// creamos la fecha
 											LocalTime fechaSala=LocalTime.of(horaSala,minSala,0);
 											// creamos codigo sesion nueva
@@ -835,10 +848,22 @@ public class main {
 											String codigoPeliculaSesion=sc.nextLine();
 											System.out.print("\nIntroduce numero de la sala: ");
 											int numeroSala=sc.nextInt();
-											System.out.print("\nIntroduce hora de la sala: ");
-											int horaSala=sc.nextInt();
-											System.out.print("\nIntroduce minutos de la sala: ");
-											int minSala=sc.nextInt();
+											int horaSala=0, minSala=0, error=0;
+											do{
+												try{
+													error=0;
+													sc.nextLine();
+													System.out.print("\nIntroduce hora de la sala: ");
+													horaSala=sc.nextInt();
+												
+													System.out.print("\nIntroduce minutos de la sala: ");
+													minSala=sc.nextInt();
+													
+												}catch(InputMismatchException e){
+													System.out.println("\n-- Por favor introduce formato de datos correctos (12 en horas 15 en min)");
+													error=1;
+												}
+											}while(error==1);
 											
 											// creamos la fecha
 											LocalTime horaSala2=LocalTime.of(horaSala,minSala,0);

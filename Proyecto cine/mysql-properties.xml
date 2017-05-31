@@ -4,7 +4,7 @@
 
   <entry key="dbms">mysql</entry>
   <entry key="driver">com.mysql.jdbc.Driver</entry>
-  <entry key="database_name">netcine</entry>
+  <entry key="database_name">bbddcine</entry>
   <entry key="user_name">admin</entry>
   <entry key="password">a1234567</entry>
   <entry key="server_name">localhost</entry>

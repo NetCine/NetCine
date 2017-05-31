@@ -1,1 +1,7 @@
-DNI 	CANTIDAD (euros)
+
+Nominas generadas el dia: 2017-05-31
+
+DNI		    CANTIDAD(euros)
+
+0101010-A	1575 euros
+0202022-B	1050 euros

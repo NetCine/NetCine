@@ -38,3 +38,37 @@ prueba@prueba.com	a1234567.	2017-05-31
 prueba@prueba.com	a1234567.	2017-05-31
 
 prueba@prueba.com	a1234567.	2017-05-31
+
+jefe@jefe.com	a1234567	2017-05-31
+
+jefe@jefe.com	a1234567	2017-05-31
+
+empleado@empleado.com	a1234567	2017-05-31
+
+empleado@empleado.com	a1234567	2017-05-31
+
+cliente@normal.com	a1234567	2017-05-31
+
+jefe@jefe.com	a1234567	2017-05-31
+
+jefe@jefe.com	a1234567	2017-05-31
+
+jefe@jefe.com	a1234567	2017-05-31
+
+jefe@jefe.com	a1234567	2017-05-31
+
+jefe@jefe.com	a1234567	2017-05-31
+
+jefe@jefe.com	a1234567	2017-05-31
+
+jefe@jefe.com	a1234567	2017-05-31
+
+jefe@jefe.com	a1234567	2017-05-31
+
+empleado@empleado.com	a1234567	2017-05-31
+
+cliente@normal.com	a12345678	2017-05-31
+
+cliente@especial.com	a1234567	2017-05-31
+
+jefe@jefe.com	a1234567	2017-05-31
