@@ -1102,25 +1102,30 @@ public class main {
 									if(bd7.añadirPeticion(pp)==true)
 										System.out.println("\nTu peticion se ha añadido correctamente");
 									else
-										System.out.println("\n-- ERROR, la peticion no se ha podido añadir");
+										System.out.println("\n-- ERROR, inserte datos correctos");
 								}
 								if(opcionEmpleado==3){
 									Vector <Peticion> peticionesEmpAceptadas = new Vector <Peticion> ();
+									System.out.print("\nInserta tu DNI: ");
+									sc.nextLine();
+									String DNIEmpleado=sc.nextLine();
+									peticionesEmpAceptadas=bd7.listaPeticionesAceptadas(DNIEmpleado);
 									
-									peticionesEmpAceptadas=bd7.listaPeticionesAceptadas();
-									if(peticionesEmpAceptadas!=null){ // Si tenemos peticiones por revisar
+									if(peticionesEmpAceptadas.size()>0){ // Si tenemos peticiones por revisar
 										System.out.println("\nEstas son las peticiones aceptadas: \n");	
-										for(int i=0;i<peticionesEmpAceptadas.size();i++){
+										for(int i=0;i<peticionesEmpAceptadas.size();i++)
 											System.out.println(peticionesEmpAceptadas.get(i).toString());											
 											
-										}
-									
-								}
-								}
+										
+									}
+									if(peticionesEmpAceptadas.size()==0)
+										System.out.println("\n--- No tiene ninguna peticion aceptada\n");	
 								
+								}
 														
 								if(opcionEmpleado==4)
 									System.out.print("\n--- HASTA PRONTO ---\n");
+								
 								if(opcionEmpleado>4)
 									System.out.println("\n--- ERROR, OPCION NO VALIDA\n");
 						

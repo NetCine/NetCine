@@ -101,8 +101,8 @@ public class BD_Peticion extends BD_Conector {
 	 * @author diego
 	 * @return
 	 */	
-	public  Vector <Peticion> listaPeticionesAceptadas(){
-		String cadena="SELECT * from peticion WHERE estado= 1";
+	public  Vector <Peticion> listaPeticionesAceptadas(String DNIEmple){
+		String cadena="SELECT * from peticion WHERE estado= 1 AND DNIEmple='" + DNIEmple +"'";
 		Vector <Peticion> peticionesEmpAceptadas = new Vector <Peticion> ();
 		
 		try{
@@ -111,10 +111,11 @@ public class BD_Peticion extends BD_Conector {
 			reg=s.executeQuery(cadena);
 			while ( reg.next()){
 				
-				peticionesEmpAceptadas.add(new Peticion(reg.getString("codpeticion"), reg.getString("motivopeticion"), reg.getString("dniemple")));
+				peticionesEmpAceptadas.add(new Peticion(reg.getString("codpeticion"), reg.getString("motivopeticion"), reg.getString("dniemple"), reg.getInt("Revisado"), reg.getInt("Estado")));
 			}
 			s.close();
 			this.cerrar();
+			
 			return peticionesEmpAceptadas;
 		}
 		catch ( SQLException e){		
@@ -139,8 +140,6 @@ public  boolean añadirPeticion(Peticion pp){
 			return true;
 		}
 		catch ( SQLException e){
-			e.printStackTrace();
-			this.cerrar();
 			return false;
 		}
 	}

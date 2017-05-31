@@ -10,7 +10,24 @@ public class Peticion {
 	private String codigoPeticion, motivoPeticion, dniEmpleado;
 	private int estado, revisado;
 	
-	
+	/**
+	 * @author diego
+	 * @param codigoPeticion
+	 * @param motivoPeticion
+	 * @param dniEmpleado
+	 * @param estado
+	 * @param revisado
+	 */
+	public Peticion(String codigoPeticion, String motivoPeticion, String dniEmpleado, int estado, int revisado) {
+		super();
+		this.codigoPeticion = codigoPeticion;
+		this.motivoPeticion = motivoPeticion;
+		this.dniEmpleado = dniEmpleado;
+		this.estado = estado;
+		this.revisado = revisado;
+	}
+
+
 	/**
 	 * Metodo para crear una peticion nueva
 	 * @author cesar
@@ -122,7 +139,7 @@ public class Peticion {
 	 * @author cesar
 	 */
 	public String toString() {
-		return "codigo de peticion=" + codigoPeticion
+		return "Codigo de peticion=" + codigoPeticion
 				+ ", cuyo motivo de peticion es: " + motivoPeticion + ", pedida por el empleado con dni: "
 				+ dniEmpleado + ", su estado es: " + estado + ", y su estado de revision: " + revisado
 				+ "";

@@ -22,3 +22,19 @@ Cliente@especial.com	a1234567.	2017-05-30
 Cliente@especial.com	a1234567.	2017-05-30
 
 Cliente@especial.com	a1234567.	2017-05-30
+
+prueba@prueba.com	a1234567.	2017-05-31
+
+prueba@prueba.com	a1234567.	2017-05-31
+
+prueba@prueba.com	a1234567.	2017-05-31
+
+prueba@prueba.com	a1234567.	2017-05-31
+
+prueba@prueba.com	a1234567.	2017-05-31
+
+prueba@prueba.com	a1234567.	2017-05-31
+
+prueba@prueba.com	a1234567.	2017-05-31
+
+prueba@prueba.com	a1234567.	2017-05-31
